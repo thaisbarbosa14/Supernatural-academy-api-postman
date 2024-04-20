@@ -34,8 +34,15 @@ jobs:
           --reporter-htmlextra-browserTitle "Report Supernatural" \
           --reporter-htmlextra-title "Report Supernatural" \
           --reporter-htmlextra-export ./docs/index.html
-          
+
+    - name: Verify Report File
+      run: |
+        pwd
+        ls -l
+        ls -l ./docs/
+
     - name: Upload Test Report
+      if: success()
       uses: actions/upload-artifact@v2
       with:
         name: test-report
