@@ -20,7 +20,7 @@ jobs:
     - name: Install Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '16'
+        node-version: '20'
 
     - name: Install Newman
       run: npm install -g newman
@@ -34,3 +34,10 @@ jobs:
           --reporter-htmlextra-browserTitle "Report Supernatural" \
           --reporter-htmlextra-title "Report Supernatural" \
           --reporter-htmlextra-export ./docs/index.html
+          
+    - name: Upload Test Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-report
+        path: ./docs/index.html
+    
