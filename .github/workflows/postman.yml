@@ -41,7 +41,6 @@ jobs:
           --reporter-htmlextra-export ./docs/index.html
 
     - name: Upload Test Report
-      if: success()
       uses: actions/upload-artifact@v2
       with:
           name: test-report
