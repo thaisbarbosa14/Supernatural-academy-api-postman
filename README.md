@@ -1,36 +1,54 @@
 # Postman CI com GitHub Actions
 
-Este repositório contém um workflow de CI para rodar testes do Postman usando GitHub Actions.
+Este repositório contém um workflow do GitHub Actions configurado para executar testes de API do Postman usando o Newman e gerar um relatório HTML usando o reporter Htmlextra.
 
-## Descrição do Workflow
+## Estrutura do Arquivo YAML do Workflow
 
-O workflow é configurado para ser acionado em push para as branches `main` em pull requests para estas branches. O workflow é executado em um ambiente `ubuntu-latest` e usa as seguintes etapas:
+O arquivo `yml` do workflow define os seguintes passos:
 
-### 1. Checkout Repository
+1. **Checkout do Repositório**
+    ```yaml
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    ```
 
-Faz checkout do repositório para o ambiente de execução.
+2. **Verificar Versões do Newman e Node**
+    ```yaml
+    - name: Step 1 Check version Newman and Node
+      run: |
+          newman --version
+          node --version
+    ```
 
-### 2. Install Node.js
+3. **Instalar Newman-Reporter-HtmlExtra**
+    ```yaml
+    - name: Step 2 Install Newman-Reporter-HtmlExtra
+      run: sudo npm install -g newman-reporter-htmlextra
+    ```
 
-Instala o Node.js versão 16 para atender ao requisito mínimo de versão do Newman.
+4. **Executar Testes da Coleção do Postman**
+    ```yaml
+    - name: Step 3 Execute collection
+      run: newman run ./supernatural_collection.json -e ./supernatural_environment.json -g ./supernatural_globals.json --reporters cli,htmlextra --reporter-htmlextra-browserTitle "Report API Supernatural" --reporter-htmlextra-title "Report API Supernatural" --reporter-htmlextra-export ./docs/index.html
+    ```
 
-### 3. Install Newman
+5. **Upload do Relatório de Teste**
+    ```yaml
+    - name: Upload Test Report
+      if: success()
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-report
+        path: ./docs/index.html
+    ```
 
-Instala o Newman, um executor de coleções Postman.
+## Execução do Workflow
 
-### 4. Run Postman Tests
+O workflow é acionado em push para a branch `main` e em pull requests para a branch `main`.
 
-Executa os testes do Postman usando os arquivos `supernatural_collection.json`, `supernatural_environment.json` e `supernatural_globals.json` e gera um relatório HTML em `./docs/index.html`.
+## Próximos Passos
 
-#### Comando Newman
+Após configurar o workflow do GitHub Actions, você pode monitorar a execução dos testes e o upload do relatório de teste no GitHub Actions e verificar os resultados dos testes no relatório HTML gerado no diretório `./docs/`.
 
-```bash
-newman run ./supernatural_collection.json \
-  -e ./supernatural_environment.json \
-  -g ./supernatural_globals.json \
-  --reporters cli,htmlextra \
-  --reporter-htmlextra-browserTitle "Report Supernatural" \
-  --reporter-htmlextra-title "Report Supernatural" \
-  --reporter-htmlextra-export ./docs/index.html
 
 
