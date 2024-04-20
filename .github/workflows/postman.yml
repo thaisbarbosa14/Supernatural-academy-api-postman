@@ -35,12 +35,13 @@ jobs:
           --reporters cli,htmlextra \
           --reporter-htmlextra-browserTitle "Report Supernatural" \
           --reporter-htmlextra-title "Report Supernatural" \
-          --reporter-htmlextra-export ./docs.html
+          --reporter-htmlextra-export ./docs/index.html
 
    
     - name: Upload Test Report
       if: success()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v1
       with:
-        name: test-report
-        path: ./docs.html
+          name: test-report
+          path: ./docs/index.html
+
