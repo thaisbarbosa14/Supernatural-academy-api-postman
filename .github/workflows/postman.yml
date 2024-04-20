@@ -16,29 +16,19 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Install Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
+     # Runs a single command using the runners shell
+      - name: Step 1 Check version Newman and Node
+        run: |
+          newman --version
+          node --version
+          
+      # Runs a single command using the runners shell
+      - name: Step 2 Install Newman-Reporter-HtmlExtra
+        run: sudo npm install -g newman-reporter-htmlextra
 
-    - name: Create Docs Directory
-      run: mkdir -p ./docs
-
-    - name: Install Newman
-      run: npm install -g newman
-
-    - name: Install Newman-Reporter-Htmlextra
-      run:  sudo npm install -g newman-reporter-htmlextra
-
-    - name: Run Postman Tests
-      run: |
-        newman run ./supernatural_collection.json \
-          -e ./supernatural_environment.json \
-          -g ./supernatural_globals.json \
-          --reporters cli,htmlextra \
-          --reporter-htmlextra-browserTitle "Report Supernatural" \
-          --reporter-htmlextra-title "Report Supernatural" \
-          --reporter-htmlextra-export ./docs/index.html
+  # Runs a single command using the runners shell
+      - name: Step 3 Execute collection
+        run: newman run ./supernatural_collection.json -e ./supernatural_environment.json -g ./supernatural_globals.json --reporters cli, -r htmlextra --reporter-htmlextra-browserTitle "Report API Supernatural" --reporter-htmlextra-title "Report API Supernatural" --reporter-htmlextra-export ./docs/index.html
 
     - name: Upload Test Report
       if: success()
