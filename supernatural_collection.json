@@ -1,0 +1,3624 @@
+{
+	"info": {
+		"_postman_id": "e99947a8-d52e-4cc6-9a4f-a6414946790a",
+		"name": "Supernatural",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30720262",
+		"_collection_link": "https://blue-meadow-792380.postman.co/workspace/Supernatural~88a84c57-035f-4ad5-8243-3fd2154dc445/collection/30720262-e99947a8-d52e-4cc6-9a4f-a6414946790a?action=share&source=collection_link&creator=30720262"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "token admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"tokenAdmin\", JSON.parse(responseBody).token);\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"mail\": \"{{mailAdmin}}\",\r\n  \"password\": \"{{passwordAdmin}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validate token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/validateToken",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"validateToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status da resposta deve ser 201 OK\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Verifica o fullName do usuário\r",
+									"pm.test(\"O fullName do usuário deve ser uma string\", function () {\r",
+									"    pm.expect(pm.response.json().user.fullName).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"// Verifica o mail do usuário\r",
+									"pm.test(\"O mail do usuário deve ser uma string\", function () {\r",
+									"    pm.expect(pm.response.json().user.mail).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"// Verifica o accessProfile do usuário\r",
+									"pm.test(\"O accessProfile do usuário deve ser uma string\", function () {\r",
+									"    pm.expect(pm.response.json().user.accessProfile).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"// Verifica o cpf do usuário\r",
+									"pm.test(\"O cpf do usuário deve ser uma string\", function () {\r",
+									"    pm.expect(pm.response.json().user.cpf).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"// Verifica o status do usuário\r",
+									"pm.test(\"O status do usuário deve ser um boolean\", function () {\r",
+									"    pm.expect(pm.response.json().user.status).to.be.a('boolean');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"function firstName() {\r",
+									"    var firstName = [\"Carlos\", \"Rafael\", \"Lucas\", \"Gustavo\", \"Felipe\", \"Bruno\", \"Leonardo\", \"Fernando\", \"Rodrigo\", \"Eduardo\", \"Ana\", \"Maria\", \"Juliana\", \"Camila\", \"Isabela\", \"Aline\", \"Fernanda\", \"Carolina\", \"Mariana\", \"Larissa\", \"Vanessa\", \"Luciana\", \"Bianca\", \"Daniela\", \"Renata\", \"Tatiana\", \"Giovanni\", \"Marcelo\", \"Humberto\", \"Diego\", \"Renan\", \"Adriano\", \"Daniel\", \"Marcos\", \"Ricardo\", \"Anderson\", \"Fábio\", \"Paulo\", \"Samuel\", \"Geraldo\", \"Cristina\", \"Amanda\", \"Luana\", \"Eduardo\", \"Sophia\", \"Rafael\", \"Camila\", \"Lucas\", \"Larissa\", \"Gustavo\", \"Isabella\", \"Henrique\", \"Manuela\", \"Thiago\", \"Valentina\", \"Arthur\", \"Mariana\", \"Enzo\", \"Gabriela\", \"Pedro\", \"Clara\", \"Matheus\", \"Juliana\", \"Davi\", \"Carolina\", \"Lorenzo\", \"Laura\", \"Beatriz\", \"Leonardo\", \"Maria\", \"Giovanni\", \"Nina\", \"Felipe\", \"Amanda\", \"Vitor\", \"Isabel\", \"Mirella\", \"Fernanda\", \"Daniel\", \"Bruno\", \"Raquel\", \"Luciana\", \"Artur\", \"Sophie\"];\r",
+									"\r",
+									"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)];\r",
+									"\r",
+									"    return randomItem\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"FirstName\", firstName());\r",
+									"\r",
+									"function lastName() {\r",
+									"    var lastName = [\"Santos\", \"Silva\", \"Pereira\", \"Oliveira\", \"Almeida\", \"Ferreira\", \"Costa\", \"Lima\", \"Rodrigues\", \"Gomes\", \"Martins\", \"Souza\", \"Rocha\", \"Carvalho\", \"Vieira\", \"Barbosa\", \"Andrade\", \"Fernandes\", \"Pinto\", \"Mendes\", \"Nunes\", \"Freitas\", \"Correia\", \"Machado\", \"Farias\", \"Dias\", \"Cunha\", \"Castro\", \"Cardoso\", \"Ribeiro\", \"Rezende\", \"Monteiro\", \"Campos\", \"Teixeira\", \"Leal\", \"Borges\", \"Franco\", \"Siqueira\", \"Sousa\", \"Moraes\", \"Brito\", \"Marques\", \"Lopes\", \"Duarte\",\"Fonseca\", \"Borges\", \"Franco\", \"Siqueira\", \"Sousa\", \"Moraes\", \"Brito\", \"Marques\", \"Lopes\", \"Duarte\", \"Fonseca\", \"Lemos\", \"Caldeira\", \"Pires\", \"Tavares\", \"Macedo\", \"Cavalcanti\", \"Cruz\", \"Nascimento\", \"Aguiar\", \"Peixoto\", \"Medeiros\", \"Vargas\", \"Barros\", \"Coutinho\", \"Xavier\", \"Lacerda\", \"Dantas\", \"Abreu\", \"Assis\", \"Azevedo\", \"Miranda\", \"Sales\", \"Pacheco\", \"Prado\", \"Teles\", \"Pessoa\", \"Domingues\", \"Camargo\", \"Moura\", \"Goulart\", \"Fagundes\", \"Nogueira\", \"Barreto\", \"Vasconcelos\", \"Braga\"];\r",
+									"\r",
+									"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)];\r",
+									"\r",
+									"    return randomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"LastName\", lastName());\r",
+									"\r",
+									"pm.environment.set(\"FullName\", pm.variables.get(\"FirstName\") + \" \" + pm.variables.get(\"LastName\"));\r",
+									"\r",
+									"\r",
+									"function generateCPF() {\r",
+									"  const randomDigit = () => Math.floor(Math.random() * 10);\r",
+									" \r",
+									"  const cpfDigits = Array.from({ length: 9 }, randomDigit);\r",
+									"  \r",
+									"  let sum = 0;\r",
+									"  for (let i = 10; i > 1; i--) {\r",
+									"    sum += cpfDigits[10 - i] * i;\r",
+									"  }\r",
+									"  const firstVerifierDigit = (sum * 10) % 11;\r",
+									"  cpfDigits.push(firstVerifierDigit === 10 ? 0 : firstVerifierDigit);\r",
+									"  \r",
+									"  sum = 0;\r",
+									"  for (let i = 11; i > 1; i--) {\r",
+									"    sum += cpfDigits[11 - i] * i;\r",
+									"  }\r",
+									"  const secondVerifierDigit = (sum * 10) % 11;\r",
+									"  cpfDigits.push(secondVerifierDigit === 10 ? 0 : secondVerifierDigit);\r",
+									"  \r",
+									"  return cpfDigits.join('');\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"cpf\", generateCPF());\r",
+									"\r",
+									"function domain(){\r",
+									"    var domain = [\"@gmail.com\", \"@hotmail.com\", \"@yandex.com\", \"@cortex.com\", \"@qacoders.com\", \"@amandex.com\", \"@bertolux.com\", \"@jeritoca.com\", \"@uol.com\"];\r",
+									"    var radomItem = domain[Math.floor(Math.random() * domain.length)]\r",
+									"    return radomItem;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"Domain\", domain());\r",
+									"\r",
+									"function mail(){\r",
+									"    var mail = pm.variables.get(\"FirstName\").toLowerCase()+pm.variables.get(\"LastName\").toLowerCase()+ \"_\"+ pm.variables.replaceIn('{{$guid}}')+ pm.variables.get(\"Domain\");\r",
+									"    return mail;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"Email\", mail());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"{{Password}}\",\r\n  \"accessProfile\": \"{{accessProfile}}\",\r\n  \"cpf\": \"{{cpf}}\",\r\n  \"confirmPassword\": \"{{Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/user/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/user/count",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/user/6542eec10e16bbe73ed1ed4d",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"6542eec10e16bbe73ed1ed4d"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "key",
+						"value": "Authorization",
+						"type": "string"
+					},
+					{
+						"key": "in",
+						"value": "header",
+						"type": "string"
+					},
+					{
+						"key": "value",
+						"value": "{{tokenAdmin}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Editar Login/ Password",
+			"item": [
+				{
+					"name": "Auth Edit",
+					"item": [
+						{
+							"name": "Register Edit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Status da resposta deve ser 201 OK\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"// Captura o email da resposta\r",
+											"var jsonResponse = pm.response.json();\r",
+											"var email = jsonResponse.user.mail;\r",
+											"\r",
+											"// Armazena o email em uma variável global\r",
+											"pm.globals.set(\"emailEdit\", email);\r",
+											"\r",
+											"\r",
+											"// Verifica o fullName do usuário\r",
+											"pm.test(\"O fullName do usuário deve ser uma string\", function () {\r",
+											"    pm.expect(pm.response.json().user.fullName).to.be.a('string');\r",
+											"});\r",
+											"\r",
+											"// Verifica o mail do usuário\r",
+											"pm.test(\"O mail do usuário deve ser uma string\", function () {\r",
+											"    pm.expect(pm.response.json().user.mail).to.be.a('string');\r",
+											"});\r",
+											"\r",
+											"// Verifica o accessProfile do usuário\r",
+											"pm.test(\"O accessProfile do usuário deve ser uma string\", function () {\r",
+											"    pm.expect(pm.response.json().user.accessProfile).to.be.a('string');\r",
+											"});\r",
+											"\r",
+											"// Verifica o cpf do usuário\r",
+											"pm.test(\"O cpf do usuário deve ser uma string\", function () {\r",
+											"    pm.expect(pm.response.json().user.cpf).to.be.a('string');\r",
+											"});\r",
+											"\r",
+											"// Verifica o status do usuário\r",
+											"pm.test(\"O status do usuário deve ser um boolean\", function () {\r",
+											"    pm.expect(pm.response.json().user.status).to.be.a('boolean');\r",
+											"});\r",
+											"\r",
+											"pm.globals.set(\"ID\", pm.variables.replaceIn(JSON.parse(responseBody).user._id));\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"function firstName() {\r",
+											"    var firstName = [\"Carlos\", \"Rafael\", \"Lucas\", \"Gustavo\", \"Felipe\", \"Bruno\", \"Leonardo\", \"Fernando\", \"Rodrigo\", \"Eduardo\", \"Ana\", \"Maria\", \"Juliana\", \"Camila\", \"Isabela\", \"Aline\", \"Fernanda\", \"Carolina\", \"Mariana\", \"Larissa\", \"Vanessa\", \"Luciana\", \"Bianca\", \"Daniela\", \"Renata\", \"Tatiana\", \"Giovanni\", \"Marcelo\", \"Humberto\", \"Diego\", \"Renan\", \"Adriano\", \"Daniel\", \"Marcos\", \"Ricardo\", \"Anderson\", \"Fábio\", \"Paulo\", \"Samuel\", \"Geraldo\", \"Cristina\", \"Amanda\", \"Luana\", \"Eduardo\", \"Sophia\", \"Rafael\", \"Camila\", \"Lucas\", \"Larissa\", \"Gustavo\", \"Isabella\", \"Henrique\", \"Manuela\", \"Thiago\", \"Valentina\", \"Arthur\", \"Mariana\", \"Enzo\", \"Gabriela\", \"Pedro\", \"Clara\", \"Matheus\", \"Juliana\", \"Davi\", \"Carolina\", \"Lorenzo\", \"Laura\", \"Beatriz\", \"Leonardo\", \"Maria\", \"Giovanni\", \"Nina\", \"Felipe\", \"Amanda\", \"Vitor\", \"Isabel\", \"Mirella\", \"Fernanda\", \"Daniel\", \"Bruno\", \"Raquel\", \"Luciana\", \"Artur\", \"Sophie\"];\r",
+											"\r",
+											"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)];\r",
+											"\r",
+											"    return randomItem\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"FirstName\", firstName());\r",
+											"\r",
+											"function lastName() {\r",
+											"    var lastName = [\"Santos\", \"Silva\", \"Pereira\", \"Oliveira\", \"Almeida\", \"Ferreira\", \"Costa\", \"Lima\", \"Rodrigues\", \"Gomes\", \"Martins\", \"Souza\", \"Rocha\", \"Carvalho\", \"Vieira\", \"Barbosa\", \"Andrade\", \"Fernandes\", \"Pinto\", \"Mendes\", \"Nunes\", \"Freitas\", \"Correia\", \"Machado\", \"Farias\", \"Dias\", \"Cunha\", \"Castro\", \"Cardoso\", \"Ribeiro\", \"Rezende\", \"Monteiro\", \"Campos\", \"Teixeira\", \"Leal\", \"Borges\", \"Franco\", \"Siqueira\", \"Sousa\", \"Moraes\", \"Brito\", \"Marques\", \"Lopes\", \"Duarte\",\"Fonseca\", \"Borges\", \"Franco\", \"Siqueira\", \"Sousa\", \"Moraes\", \"Brito\", \"Marques\", \"Lopes\", \"Duarte\", \"Fonseca\", \"Lemos\", \"Caldeira\", \"Pires\", \"Tavares\", \"Macedo\", \"Cavalcanti\", \"Cruz\", \"Nascimento\", \"Aguiar\", \"Peixoto\", \"Medeiros\", \"Vargas\", \"Barros\", \"Coutinho\", \"Xavier\", \"Lacerda\", \"Dantas\", \"Abreu\", \"Assis\", \"Azevedo\", \"Miranda\", \"Sales\", \"Pacheco\", \"Prado\", \"Teles\", \"Pessoa\", \"Domingues\", \"Camargo\", \"Moura\", \"Goulart\", \"Fagundes\", \"Nogueira\", \"Barreto\", \"Vasconcelos\", \"Braga\"];\r",
+											"\r",
+											"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)];\r",
+											"\r",
+											"    return randomItem;\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"LastName\", lastName());\r",
+											"\r",
+											"pm.environment.set(\"FullName\", pm.variables.get(\"FirstName\") + \" \" + pm.variables.get(\"LastName\"));\r",
+											"\r",
+											"\r",
+											"function generateCPF() {\r",
+											"  const randomDigit = () => Math.floor(Math.random() * 10);\r",
+											" \r",
+											"  const cpfDigits = Array.from({ length: 9 }, randomDigit);\r",
+											"  \r",
+											"  let sum = 0;\r",
+											"  for (let i = 10; i > 1; i--) {\r",
+											"    sum += cpfDigits[10 - i] * i;\r",
+											"  }\r",
+											"  const firstVerifierDigit = (sum * 10) % 11;\r",
+											"  cpfDigits.push(firstVerifierDigit === 10 ? 0 : firstVerifierDigit);\r",
+											"  \r",
+											"  sum = 0;\r",
+											"  for (let i = 11; i > 1; i--) {\r",
+											"    sum += cpfDigits[11 - i] * i;\r",
+											"  }\r",
+											"  const secondVerifierDigit = (sum * 10) % 11;\r",
+											"  cpfDigits.push(secondVerifierDigit === 10 ? 0 : secondVerifierDigit);\r",
+											"  \r",
+											"  return cpfDigits.join('');\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"cpf\", generateCPF());\r",
+											"\r",
+											"function domain(){\r",
+											"    var domain = [\"@gmail.com\", \"@hotmail.com\", \"@yandex.com\", \"@cortex.com\", \"@qacoders.com\", \"@amandex.com\", \"@bertolux.com\", \"@jeritoca.com\", \"@uol.com\"];\r",
+											"    var radomItem = domain[Math.floor(Math.random() * domain.length)]\r",
+											"    return radomItem;\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"Domain\", domain());\r",
+											"\r",
+											"function mail(){\r",
+											"    var mail = pm.variables.get(\"FirstName\").toLowerCase()+pm.variables.get(\"LastName\").toLowerCase()+ \"_\"+ pm.variables.replaceIn('{{$guid}}')+ pm.variables.get(\"Domain\");\r",
+											"    return mail;\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"Email\", mail());\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Email}}\",\r\n  \"password\": \"{{passwordAdmin}}\",\r\n  \"accessProfile\": \"{{accessProfile}}\",\r\n  \"cpf\": \"{{cpf}}\",\r\n  \"confirmPassword\": \"{{passwordAdmin}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register token edit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.globals.set(\"tokenEdit\", JSON.parse(responseBody).token);\r",
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"mail\": \"{{emailEdit}}\",\r\n  \"password\": \"{{passwordAdmin}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/login",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Funcional",
+					"item": [
+						{
+							"name": "Editar Login Successo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a mensagem de retorno é \"Dados atualizados com sucesso!\"\r",
+											"pm.test(\"A mensagem de retorno deve ser 'Dados atualizados com sucesso!'\", function () {\r",
+											"    pm.expect(pm.response.json().msg).to.eql(\"Dados atualizados com sucesso!\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"function firstName() {\r",
+											"    var firstName = [\"Carlos\", \"Rafael\", \"Lucas\", \"Gustavo\", \"Felipe\", \"Bruno\", \"Leonardo\", \"Fernando\", \"Rodrigo\", \"Eduardo\", \"Ana\", \"Maria\", \"Juliana\", \"Camila\", \"Isabela\", \"Aline\", \"Fernanda\", \"Carolina\", \"Mariana\", \"Larissa\", \"Vanessa\", \"Luciana\", \"Bianca\", \"Daniela\", \"Renata\", \"Tatiana\", \"Giovanni\", \"Marcelo\", \"Humberto\", \"Diego\", \"Renan\", \"Adriano\", \"Daniel\", \"Marcos\", \"Ricardo\", \"Anderson\", \"Fábio\", \"Paulo\", \"Samuel\", \"Geraldo\", \"Cristina\", \"Amanda\", \"Luana\", \"Eduardo\", \"Sophia\", \"Rafael\", \"Camila\", \"Lucas\", \"Larissa\", \"Gustavo\", \"Isabella\", \"Henrique\", \"Manuela\", \"Thiago\", \"Valentina\", \"Arthur\", \"Mariana\", \"Enzo\", \"Gabriela\", \"Pedro\", \"Clara\", \"Matheus\", \"Juliana\", \"Davi\", \"Carolina\", \"Lorenzo\", \"Laura\", \"Beatriz\", \"Leonardo\", \"Maria\", \"Giovanni\", \"Nina\", \"Felipe\", \"Amanda\", \"Vitor\", \"Isabel\", \"Mirella\", \"Fernanda\", \"Daniel\", \"Bruno\", \"Raquel\", \"Luciana\", \"Artur\", \"Sophie\"];\r",
+											"\r",
+											"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)];\r",
+											"\r",
+											"    return randomItem\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"FirstName\", firstName());\r",
+											"\r",
+											"function lastName() {\r",
+											"    var lastName = [\"Santos\", \"Silva\", \"Pereira\", \"Oliveira\", \"Almeida\", \"Ferreira\", \"Costa\", \"Lima\", \"Rodrigues\", \"Gomes\", \"Martins\", \"Souza\", \"Rocha\", \"Carvalho\", \"Vieira\", \"Barbosa\", \"Andrade\", \"Fernandes\", \"Pinto\", \"Mendes\", \"Nunes\", \"Freitas\", \"Correia\", \"Machado\", \"Farias\", \"Dias\", \"Cunha\", \"Castro\", \"Cardoso\", \"Ribeiro\", \"Rezende\", \"Monteiro\", \"Campos\", \"Teixeira\", \"Leal\", \"Borges\", \"Franco\", \"Siqueira\", \"Sousa\", \"Moraes\", \"Brito\", \"Marques\", \"Lopes\", \"Duarte\",\"Fonseca\", \"Borges\", \"Franco\", \"Siqueira\", \"Sousa\", \"Moraes\", \"Brito\", \"Marques\", \"Lopes\", \"Duarte\", \"Fonseca\", \"Lemos\", \"Caldeira\", \"Pires\", \"Tavares\", \"Macedo\", \"Cavalcanti\", \"Cruz\", \"Nascimento\", \"Aguiar\", \"Peixoto\", \"Medeiros\", \"Vargas\", \"Barros\", \"Coutinho\", \"Xavier\", \"Lacerda\", \"Dantas\", \"Abreu\", \"Assis\", \"Azevedo\", \"Miranda\", \"Sales\", \"Pacheco\", \"Prado\", \"Teles\", \"Pessoa\", \"Domingues\", \"Camargo\", \"Moura\", \"Goulart\", \"Fagundes\", \"Nogueira\", \"Barreto\", \"Vasconcelos\", \"Braga\"];\r",
+											"\r",
+											"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)];\r",
+											"\r",
+											"    return randomItem;\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"LastName\", lastName());\r",
+											"\r",
+											"pm.environment.set(\"FullName\", pm.variables.get(\"FirstName\") + \" \" + pm.variables.get(\"LastName\"));\r",
+											"\r",
+											"\r",
+											"function generateCPF() {\r",
+											"  const randomDigit = () => Math.floor(Math.random() * 10);\r",
+											" \r",
+											"  const cpfDigits = Array.from({ length: 9 }, randomDigit);\r",
+											"  \r",
+											"  let sum = 0;\r",
+											"  for (let i = 10; i > 1; i--) {\r",
+											"    sum += cpfDigits[10 - i] * i;\r",
+											"  }\r",
+											"  const firstVerifierDigit = (sum * 10) % 11;\r",
+											"  cpfDigits.push(firstVerifierDigit === 10 ? 0 : firstVerifierDigit);\r",
+											"  \r",
+											"  sum = 0;\r",
+											"  for (let i = 11; i > 1; i--) {\r",
+											"    sum += cpfDigits[11 - i] * i;\r",
+											"  }\r",
+											"  const secondVerifierDigit = (sum * 10) % 11;\r",
+											"  cpfDigits.push(secondVerifierDigit === 10 ? 0 : secondVerifierDigit);\r",
+											"  \r",
+											"  return cpfDigits.join('');\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"cpf\", generateCPF());\r",
+											"\r",
+											"function domain(){\r",
+											"    var domain = [\"@gmail.com\", \"@hotmail.com\", \"@yandex.com\", \"@cortex.com\", \"@qacoders.com\", \"@amandex.com\", \"@bertolux.com\", \"@jeritoca.com\", \"@uol.com\"];\r",
+											"    var radomItem = domain[Math.floor(Math.random() * domain.length)]\r",
+											"    return radomItem;\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"Domain\", domain());\r",
+											"\r",
+											"function mail(){\r",
+											"    var mail = pm.variables.get(\"FirstName\").toLowerCase()+pm.variables.get(\"LastName\").toLowerCase()+ \"_\"+ pm.variables.replaceIn('{{$guid}}')+ pm.variables.get(\"Domain\");\r",
+											"    return mail;\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"Email\", mail());"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"{{FullName}}\",\r\n    \"mail\": \"{{Email}}\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password 8 caracteres",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém a mensagem de sucesso correta\r",
+											"pm.test(\"A resposta deve conter a mensagem de sucesso correta\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('msg', 'Senha atualizada com sucesso!');\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar uma senha aleatória de 8 dígitos que atenda aos critérios\r",
+											"function generatePassword() {\r",
+											"    var uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+											"    var lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';\r",
+											"    var numbers = '0123456789';\r",
+											"    var specialCharacters = '@#$%';\r",
+											"\r",
+											"    // Seleciona aleatoriamente um caractere de cada grupo\r",
+											"    var randomUppercase = uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];\r",
+											"    var randomLowercase = lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];\r",
+											"    var randomNumber = numbers[Math.floor(Math.random() * numbers.length)];\r",
+											"    var randomSpecialCharacter = specialCharacters[Math.floor(Math.random() * specialCharacters.length)];\r",
+											"\r",
+											"    // Os restantes caracteres serão aleatórios\r",
+											"    var remainingLength = 4; // O total de caracteres deve ser 8, então, depois de incluir os requisitos mínimos, restam 4 caracteres\r",
+											"    var randomChars = Array.from({ length: remainingLength }, function () {\r",
+											"        var allCharacters = uppercaseLetters + lowercaseLetters + numbers + specialCharacters;\r",
+											"        return allCharacters[Math.floor(Math.random() * allCharacters.length)];\r",
+											"    });\r",
+											"\r",
+											"    // Combina todos os caracteres em uma senha\r",
+											"    var passwordArray = [randomUppercase, randomLowercase, randomNumber, randomSpecialCharacter].concat(randomChars);\r",
+											"    // Embaralha a senha\r",
+											"    var shuffledPassword = passwordArray.sort(function () { return Math.random() - 0.5; });\r",
+											"\r",
+											"    // Retorna a senha como uma string\r",
+											"    return shuffledPassword.join('');\r",
+											"}\r",
+											"\r",
+											"// Gera uma senha de 8 dígitos que atende aos critérios\r",
+											"var newPassword = generatePassword();\r",
+											"\r",
+											"// Define a senha na variável de ambiente para ser usada na requisição\r",
+											"pm.environment.set(\"Password8\", newPassword);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"{{Password8}}\",\r\n  \"confirmPassword\": \"{{Password8}}\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password 9 caracteres",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém a mensagem de sucesso correta\r",
+											"pm.test(\"A resposta deve conter a mensagem de sucesso correta\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('msg', 'Senha atualizada com sucesso!');\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar uma senha aleatória de 9 dígitos que atenda aos critérios\r",
+											"function generatePassword() {\r",
+											"    var uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+											"    var lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';\r",
+											"    var numbers = '0123456789';\r",
+											"    var specialCharacters = '@#$%';\r",
+											"\r",
+											"    // Seleciona aleatoriamente um caractere de cada grupo\r",
+											"    var randomUppercase = uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];\r",
+											"    var randomLowercase = lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];\r",
+											"    var randomNumber = numbers[Math.floor(Math.random() * numbers.length)];\r",
+											"    var randomSpecialCharacter = specialCharacters[Math.floor(Math.random() * specialCharacters.length)];\r",
+											"\r",
+											"    // Os restantes caracteres serão aleatórios\r",
+											"    var remainingLength = 5; // O total de caracteres deve ser 9, então, depois de incluir os requisitos mínimos, restam 4 caracteres\r",
+											"    var randomChars = Array.from({ length: remainingLength }, function () {\r",
+											"        var allCharacters = uppercaseLetters + lowercaseLetters + numbers + specialCharacters;\r",
+											"        return allCharacters[Math.floor(Math.random() * allCharacters.length)];\r",
+											"    });\r",
+											"\r",
+											"    // Combina todos os caracteres em uma senha\r",
+											"    var passwordArray = [randomUppercase, randomLowercase, randomNumber, randomSpecialCharacter].concat(randomChars);\r",
+											"    // Embaralha a senha\r",
+											"    var shuffledPassword = passwordArray.sort(function () { return Math.random() - 0.5; });\r",
+											"\r",
+											"    // Retorna a senha como uma string\r",
+											"    return shuffledPassword.join('');\r",
+											"}\r",
+											"\r",
+											"// Gera uma senha de 9 dígitos que atende aos critérios\r",
+											"var newPassword = generatePassword();\r",
+											"\r",
+											"// Define a senha na variável de ambiente para ser usada na requisição\r",
+											"pm.environment.set(\"Password9\", newPassword);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"{{Password9}}\",\r\n  \"confirmPassword\": \"{{Password9}}\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password 11 caracteres",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém a mensagem de sucesso correta\r",
+											"pm.test(\"A resposta deve conter a mensagem de sucesso correta\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('msg', 'Senha atualizada com sucesso!');\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar uma senha aleatória de 11 dígitos que atenda aos critérios\r",
+											"function generatePassword() {\r",
+											"    var uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+											"    var lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';\r",
+											"    var numbers = '0123456789';\r",
+											"    var specialCharacters = '@#$%';\r",
+											"\r",
+											"    // Seleciona aleatoriamente um caractere de cada grupo\r",
+											"    var randomUppercase = uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];\r",
+											"    var randomLowercase = lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];\r",
+											"    var randomNumber = numbers[Math.floor(Math.random() * numbers.length)];\r",
+											"    var randomSpecialCharacter = specialCharacters[Math.floor(Math.random() * specialCharacters.length)];\r",
+											"\r",
+											"    // Os restantes caracteres serão aleatórios\r",
+											"    var remainingLength = 7; \r",
+											"    var randomChars = Array.from({ length: remainingLength }, function () {\r",
+											"        var allCharacters = uppercaseLetters + lowercaseLetters + numbers + specialCharacters;\r",
+											"        return allCharacters[Math.floor(Math.random() * allCharacters.length)];\r",
+											"    });\r",
+											"\r",
+											"    // Combina todos os caracteres em uma senha\r",
+											"    var passwordArray = [randomUppercase, randomLowercase, randomNumber, randomSpecialCharacter].concat(randomChars);\r",
+											"    // Embaralha a senha\r",
+											"    var shuffledPassword = passwordArray.sort(function () { return Math.random() - 0.5; });\r",
+											"\r",
+											"    // Retorna a senha como uma string\r",
+											"    return shuffledPassword.join('');\r",
+											"}\r",
+											"\r",
+											"// Gera uma senha de 11 dígitos que atende aos critérios\r",
+											"var newPassword = generatePassword();\r",
+											"\r",
+											"// Define a senha na variável de ambiente para ser usada na requisição\r",
+											"pm.environment.set(\"Password11\", newPassword);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"{{Password11}}\",\r\n  \"confirmPassword\": \"{{Password11}}\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password 12 caracteres",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém a mensagem de sucesso correta\r",
+											"pm.test(\"A resposta deve conter a mensagem de sucesso correta\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('msg', 'Senha atualizada com sucesso!');\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar uma senha aleatória de 12 dígitos que atenda aos critérios\r",
+											"function generatePassword() {\r",
+											"    var uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+											"    var lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';\r",
+											"    var numbers = '0123456789';\r",
+											"    var specialCharacters = '@#$%';\r",
+											"\r",
+											"    // Seleciona aleatoriamente um caractere de cada grupo\r",
+											"    var randomUppercase = uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];\r",
+											"    var randomLowercase = lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];\r",
+											"    var randomNumber = numbers[Math.floor(Math.random() * numbers.length)];\r",
+											"    var randomSpecialCharacter = specialCharacters[Math.floor(Math.random() * specialCharacters.length)];\r",
+											"\r",
+											"    // Os restantes caracteres serão aleatórios\r",
+											"    var remainingLength = 8; \r",
+											"    var randomChars = Array.from({ length: remainingLength }, function () {\r",
+											"        var allCharacters = uppercaseLetters + lowercaseLetters + numbers + specialCharacters;\r",
+											"        return allCharacters[Math.floor(Math.random() * allCharacters.length)];\r",
+											"    });\r",
+											"\r",
+											"    // Combina todos os caracteres em uma senha\r",
+											"    var passwordArray = [randomUppercase, randomLowercase, randomNumber, randomSpecialCharacter].concat(randomChars);\r",
+											"    // Embaralha a senha\r",
+											"    var shuffledPassword = passwordArray.sort(function () { return Math.random() - 0.5; });\r",
+											"\r",
+											"    // Retorna a senha como uma string\r",
+											"    return shuffledPassword.join('');\r",
+											"}\r",
+											"\r",
+											"// Gera uma senha de 12 dígitos que atende aos critérios\r",
+											"var newPassword = generatePassword();\r",
+											"\r",
+											"// Define a senha na variável de ambiente para ser usada na requisição\r",
+											"pm.environment.set(\"Password12\", newPassword);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"{{Password12}}\",\r\n  \"confirmPassword\": \"{{Password12}}\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "apikey",
+						"apikey": [
+							{
+								"key": "value",
+								"value": "{{tokenEdit}}",
+								"type": "string"
+							},
+							{
+								"key": "in",
+								"value": "query",
+								"type": "string"
+							},
+							{
+								"key": "key",
+								"value": "token",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Não Funcional",
+					"item": [
+						{
+							"name": "Editar Login Fullname vazio",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Verifica se a resposta tem status 400 Bad Request\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"O campo nome completo é obrigatório.\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"\",\r\n    \"mail\": \"patricia.vit@teste.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Login Mail vazio",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"O campo e-mail é obrigatório.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"Patricia Teste\",\r\n    \"mail\": \"\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Login Fullname 101 caracteres",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"O nome completo deve ter no máximo 100 caracteres.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"Patricia Teste Patricia Teste Patricia Teste Patricia Teste Patricia Teste Patricia Teste Patricia Te\",\r\n    \"mail\": \"patricia.vit@teste.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Login Fullname caracter especial MELHORIA msg",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"Informe o nome e sobrenome com as iniciais em letra maiúscula e sem caracteres especiais.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"Patricia Vit#\",\r\n    \"mail\": \"patricia.vitoria@teste.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Login Fullname letras e numeros MELHORIA",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Verifica se a resposta tem status 400 Bad Request\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"O campo nome completo não deve conter números\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"Patricia Vit123\",\r\n    \"mail\": \"patricia.vitorian@teste.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Login Mail sem @",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"O e-mail informado é inválido. Informe um e-mail no formato [nome@domínio.com].\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"Patricia Vitoriano\",\r\n    \"mail\": \"patriciateste.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Login Mail sem ponto .",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Verifica se a resposta tem status 400 Bad Request\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"O e-mail informado é inválido. Informe um e-mail no formato [nome@domínio.com].\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"Patricia Vitoriano\",\r\n    \"mail\": \"patricia@testecom\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Login Mail sem dominio",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Verifica se a resposta tem status 400 Bad Request\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"O e-mail informado é inválido. Informe um e-mail no formato [nome@domínio.com].\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"Patricia Vitoriano\",\r\n    \"mail\": \"patricia.vitoriano\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Login Mail com espaço entre nome e dominio",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Verifica se a resposta tem status 400 Bad Request\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"O e-mail informado é inválido. Informe um e-mail no formato [nome@domínio.com].\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"Patricia Vitoriano\",\r\n    \"mail\": \"patricia.vitoriano @gmail.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Login Fullname com numeros MELHORIA",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"O campo nome completo não deve conter números\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"12345 12345\",\r\n    \"mail\": \"patricia.vit@gmail.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Login Fullname sem sobrenome",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Verifica se a resposta tem status 400 Bad Request\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"Informe o nome e sobrenome com as iniciais em letra maiúscula e sem caracteres especiais.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"Patricia\",\r\n    \"mail\": \"patricia.vit@gmail.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Login Token invalido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 403 Unauthorized\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'errors'\r",
+											"pm.test(\"A resposta deve conter um array 'errors'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('errors').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'errors' contém a mensagem correta\r",
+											"pm.test(\"O array 'errors' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().errors).to.include(\"Failed to authenticate token.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRmN2U5ZmIzY2I3YzQ4NTdlZmM2YTgiLCJmdWxsTmFtZSI6IlBhdHJpY2lhIFRlc3RlIiwibWFpbCI6InBhdHJpY2lhLnRlc3RlQHRlc3RlLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJDJTVmNOMjJBZ01wNkJDT1B1TURBSU80dFpjd2Q4R2pkWnVXL295dnBySnZnNWQxZXFlVW9xIiwiYWNjZXNzUHJvZmlsZSI6IkFETUlOIiwiY3BmIjoiMzU3NDU5NTg4MzMiLCJzdGF0dXMiOnRydWUsImF1ZGl0IjpbeyJyZWdpc3RlcmVkQnkiOnsidXNlcklkIjoiNjUzMzBlN2YwZTE2YmJlNzNlZDFlMWMxIiwidXNlckxvZ2luIjoic3lzYWRtaW5AcWFjb2RlcnMuY29tIn0sInJlZ2lzdHJhdGlvbkRhdGUiOiJxdWFydGEtZmVpcmEsIDI4LzAyLzIwMjQsIDE1OjQyOjM5IEJSVCIsInJlZ2lzdHJhdGlvbk51bWJlciI6IlFhQ29kZXJzLTg5MCIsIl9pZCI6IjY1ZGY3ZTlmYjNjYjdjNDg1N2VmYzZhOSJ9XSwiX192IjowLCJpYXQiOjE3MDkxNDU4MjEsImV4cCI6MTcwOTIzMjIyMX0.eUcocXYUcrX03iBHS3VBop7_PcTFr23R137wW4hO1",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"Patricia Vitoriano\",\r\n    \"mail\": \"patricia.vitoriano@gmail.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar Login sem Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 403 Forbidden\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'errors'\r",
+											"pm.test(\"A resposta deve conter um array 'errors'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('errors').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'errors' contém a mensagem correta\r",
+											"pm.test(\"O array 'errors' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().errors).to.include(\"No token provided.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fullName\": \"Patricia Vitoriano\",\r\n    \"mail\": \"patricia.vitoriano@gmail.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password 7 caracteres",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include.members([\r",
+											"        \"Invalid value\",\r",
+											"        \"Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial(@#$%) e tamanho entre 8-12.\"\r",
+											"    ]);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"\r",
+											"// Função para gerar uma senha aleatória que atenda aos critérios\r",
+											"function generatePassword() {\r",
+											"    var uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+											"    var lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';\r",
+											"    var numbers = '0123456789';\r",
+											"    var specialCharacters = '@#$%';\r",
+											"\r",
+											"    // Seleciona aleatoriamente um caractere de cada grupo\r",
+											"    var randomUppercase = uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];\r",
+											"    var randomLowercase = lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];\r",
+											"    var randomNumber = numbers[Math.floor(Math.random() * numbers.length)];\r",
+											"    var randomSpecialCharacter = specialCharacters[Math.floor(Math.random() * specialCharacters.length)];\r",
+											"\r",
+											"    // Os restantes caracteres serão aleatórios\r",
+											"    var remainingLength = 3;\r",
+											"    var randomChars = Array.from({ length: remainingLength }, function () {\r",
+											"        var allCharacters = uppercaseLetters + lowercaseLetters + numbers + specialCharacters;\r",
+											"        return allCharacters[Math.floor(Math.random() * allCharacters.length)];\r",
+											"    });\r",
+											"\r",
+											"    // Combina todos os caracteres em uma senha\r",
+											"    var passwordArray = [randomUppercase, randomLowercase, randomNumber, randomSpecialCharacter].concat(randomChars);\r",
+											"    // Embaralha a senha\r",
+											"    var shuffledPassword = passwordArray.sort(function () { return Math.random() - 0.5; });\r",
+											"\r",
+											"    // Retorna a senha como uma string\r",
+											"    return shuffledPassword.join('');\r",
+											"}\r",
+											"\r",
+											"// Gera uma senha que atende aos critérios\r",
+											"var newPassword = generatePassword();\r",
+											"\r",
+											"// Define a senha na variável de ambiente para ser usada na requisição\r",
+											"pm.environment.set(\"Password7\", newPassword);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"{{Password7}}\",\r\n  \"confirmPassword\": \"{{Password7}}\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password 13 caracteres",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar uma senha aleatória de 13 dígitos que atenda aos critérios\r",
+											"function generatePassword() {\r",
+											"    var uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+											"    var lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';\r",
+											"    var numbers = '0123456789';\r",
+											"    var specialCharacters = '@#$%';\r",
+											"\r",
+											"    // Seleciona aleatoriamente um caractere de cada grupo\r",
+											"    var randomUppercase = uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];\r",
+											"    var randomLowercase = lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];\r",
+											"    var randomNumber = numbers[Math.floor(Math.random() * numbers.length)];\r",
+											"    var randomSpecialCharacter = specialCharacters[Math.floor(Math.random() * specialCharacters.length)];\r",
+											"\r",
+											"    // Os restantes caracteres serão aleatórios\r",
+											"    var remainingLength = 9; \r",
+											"    var randomChars = Array.from({ length: remainingLength }, function () {\r",
+											"        var allCharacters = uppercaseLetters + lowercaseLetters + numbers + specialCharacters;\r",
+											"        return allCharacters[Math.floor(Math.random() * allCharacters.length)];\r",
+											"    });\r",
+											"\r",
+											"    // Combina todos os caracteres em uma senha\r",
+											"    var passwordArray = [randomUppercase, randomLowercase, randomNumber, randomSpecialCharacter].concat(randomChars);\r",
+											"    // Embaralha a senha\r",
+											"    var shuffledPassword = passwordArray.sort(function () { return Math.random() - 0.5; });\r",
+											"\r",
+											"    // Retorna a senha como uma string\r",
+											"    return shuffledPassword.join('');\r",
+											"}\r",
+											"\r",
+											"// Gera uma senha de 8 dígitos que atende aos critérios\r",
+											"var newPassword = generatePassword();\r",
+											"\r",
+											"// Define a senha na variável de ambiente para ser usada na requisição\r",
+											"pm.environment.set(\"Password13\", newPassword);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial(@#$%) e tamanho entre 8-12.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"{{Password13}}\",\r\n  \"confirmPassword\": \"{{Password13}}\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password 15 caracteres",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial(@#$%) e tamanho entre 8-12.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar uma senha aleatória de 15 dígitos que atenda aos critérios\r",
+											"function generatePassword() {\r",
+											"    var uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+											"    var lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';\r",
+											"    var numbers = '0123456789';\r",
+											"    var specialCharacters = '@#$%';\r",
+											"\r",
+											"    // Seleciona aleatoriamente um caractere de cada grupo\r",
+											"    var randomUppercase = uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];\r",
+											"    var randomLowercase = lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];\r",
+											"    var randomNumber = numbers[Math.floor(Math.random() * numbers.length)];\r",
+											"    var randomSpecialCharacter = specialCharacters[Math.floor(Math.random() * specialCharacters.length)];\r",
+											"\r",
+											"    // Os restantes caracteres serão aleatórios\r",
+											"    var remainingLength = 11; \r",
+											"    var randomChars = Array.from({ length: remainingLength }, function () {\r",
+											"        var allCharacters = uppercaseLetters + lowercaseLetters + numbers + specialCharacters;\r",
+											"        return allCharacters[Math.floor(Math.random() * allCharacters.length)];\r",
+											"    });\r",
+											"\r",
+											"    // Combina todos os caracteres em uma senha\r",
+											"    var passwordArray = [randomUppercase, randomLowercase, randomNumber, randomSpecialCharacter].concat(randomChars);\r",
+											"    // Embaralha a senha\r",
+											"    var shuffledPassword = passwordArray.sort(function () { return Math.random() - 0.5; });\r",
+											"\r",
+											"    // Retorna a senha como uma string\r",
+											"    return shuffledPassword.join('');\r",
+											"}\r",
+											"\r",
+											"// Gera uma senha de 8 dígitos que atende aos critérios\r",
+											"var newPassword = generatePassword();\r",
+											"\r",
+											"// Define a senha na variável de ambiente para ser usada na requisição\r",
+											"pm.environment.set(\"Password15\", newPassword);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"{{Password15}}\",\r\n  \"confirmPassword\": \"{{Password15}}\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password 16 caracteres",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial(@#$%) e tamanho entre 8-12.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar uma senha aleatória de 16 dígitos que atenda aos critérios\r",
+											"function generatePassword() {\r",
+											"    var uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+											"    var lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';\r",
+											"    var numbers = '0123456789';\r",
+											"    var specialCharacters = '@#$%';\r",
+											"\r",
+											"    // Seleciona aleatoriamente um caractere de cada grupo\r",
+											"    var randomUppercase = uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];\r",
+											"    var randomLowercase = lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];\r",
+											"    var randomNumber = numbers[Math.floor(Math.random() * numbers.length)];\r",
+											"    var randomSpecialCharacter = specialCharacters[Math.floor(Math.random() * specialCharacters.length)];\r",
+											"\r",
+											"    // Os restantes caracteres serão aleatórios\r",
+											"    var remainingLength = 12; // O total de caracteres deve ser 16, então, depois de incluir os requisitos mínimos, restam 4 caracteres\r",
+											"    var randomChars = Array.from({ length: remainingLength }, function () {\r",
+											"        var allCharacters = uppercaseLetters + lowercaseLetters + numbers + specialCharacters;\r",
+											"        return allCharacters[Math.floor(Math.random() * allCharacters.length)];\r",
+											"    });\r",
+											"\r",
+											"    // Combina todos os caracteres em uma senha\r",
+											"    var passwordArray = [randomUppercase, randomLowercase, randomNumber, randomSpecialCharacter].concat(randomChars);\r",
+											"    // Embaralha a senha\r",
+											"    var shuffledPassword = passwordArray.sort(function () { return Math.random() - 0.5; });\r",
+											"\r",
+											"    // Retorna a senha como uma string\r",
+											"    return shuffledPassword.join('');\r",
+											"}\r",
+											"\r",
+											"// Gera uma senha de 9 dígitos que atende aos critérios\r",
+											"var newPassword = generatePassword();\r",
+											"\r",
+											"// Define a senha na variável de ambiente para ser usada na requisição\r",
+											"pm.environment.set(\"Password16\", newPassword);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"{{Password16}}\",\r\n  \"confirmPassword\": \"{{Password16}}\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password 17 caracteres",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial(@#$%) e tamanho entre 8-12.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar uma senha aleatória de 17 dígitos que atenda aos critérios\r",
+											"function generatePassword() {\r",
+											"    var uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+											"    var lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';\r",
+											"    var numbers = '0123456789';\r",
+											"    var specialCharacters = '@#$%';\r",
+											"\r",
+											"    // Seleciona aleatoriamente um caractere de cada grupo\r",
+											"    var randomUppercase = uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];\r",
+											"    var randomLowercase = lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];\r",
+											"    var randomNumber = numbers[Math.floor(Math.random() * numbers.length)];\r",
+											"    var randomSpecialCharacter = specialCharacters[Math.floor(Math.random() * specialCharacters.length)];\r",
+											"\r",
+											"    // Os restantes caracteres serão aleatórios\r",
+											"    var remainingLength = 13; // O total de caracteres deve ser 17, então, depois de incluir os requisitos mínimos, restam 4 caracteres\r",
+											"    var randomChars = Array.from({ length: remainingLength }, function () {\r",
+											"        var allCharacters = uppercaseLetters + lowercaseLetters + numbers + specialCharacters;\r",
+											"        return allCharacters[Math.floor(Math.random() * allCharacters.length)];\r",
+											"    });\r",
+											"\r",
+											"    // Combina todos os caracteres em uma senha\r",
+											"    var passwordArray = [randomUppercase, randomLowercase, randomNumber, randomSpecialCharacter].concat(randomChars);\r",
+											"    // Embaralha a senha\r",
+											"    var shuffledPassword = passwordArray.sort(function () { return Math.random() - 0.5; });\r",
+											"\r",
+											"    // Retorna a senha como uma string\r",
+											"    return shuffledPassword.join('');\r",
+											"}\r",
+											"\r",
+											"// Gera uma senha 17 dígitos que atende aos critérios\r",
+											"var newPassword = generatePassword();\r",
+											"\r",
+											"// Define a senha na variável de ambiente para ser usada na requisição\r",
+											"pm.environment.set(\"Password17\", newPassword);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"{{Password17}}\",\r\n  \"confirmPassword\": \"{{Password17}}\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password sem letra maiuscula",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"Invalid value\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"1234@teste\",\r\n  \"confirmPassword\": \"1234@teste\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password sem caracter especial",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"Invalid value\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"1234Testes\",\r\n  \"confirmPassword\": \"1234Testes\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password sem letra minuscula",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"Invalid value\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"1234@TESTE\",\r\n  \"confirmPassword\": \"1234@TESTE\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password sem numeros",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"Invalid value\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"teste@Testes\",\r\n  \"confirmPassword\": \"teste@Testes\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password campo vazio",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém as mensagens corretas\r",
+											"pm.test(\"O array 'error' deve conter as mensagens corretas\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include.members([\r",
+											"        \"Campo senha é obrigatório\",\r",
+											"        \"O campo de confirmação de senha é obrigatório.\"\r",
+											"    ]);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"\",\r\n  \"confirmPassword\": \"\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password com token inválido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 403 Unauthorized\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'errors'\r",
+											"pm.test(\"A resposta deve conter um array 'errors'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('errors').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'errors' contém a mensagem correta\r",
+											"pm.test(\"O array 'errors' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().errors).to.include(\"Failed to authenticate token.\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTMzMGU3ZjBlMTZiYmU3M2VkMWUxYzEiLCJmdWxsTmFtZSI6IlFhLUNvZGVycy1TWVNBRE1JTiIsIm1haWwiOiJzeXNhZG1pbkBxYWNvZGVycy5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRZWWpPM1d3ZlgwOHROMHJTWkQ1UVVlWW0wb2h1cGJCTkdzZnFUc3hnUHdIalMyYnFvcGR1eSIsImFjY2Vzc1Byb2ZpbGUiOiJTWVNBRE1JTiIsImNwZiI6IjExMTExMTExMTExIiwic3RhdHVzIjp0cnVlLCJhdWRpdCI6W3sicmVnaXN0ZXJlZEJ5Ijp7InVzZXJJZCI6IjExMTExMTExMTExMTExMTExMSIsInVzZXJMb2dpbiI6InN5c2FkbWluQHFhY29kZXJzLmNvbSJ9LCJyZWdpc3RyYXRpb25EYXRlIjoic2V4dGEtZmVpcmEsIDIwLzEwLzIwMjMsIDIwOjM0OjIzIEJSVCIsInJlZ2lzdHJhdGlvbk51bWJlciI6IjAxIiwiY29tcGFueUlkIjoiUWEuQ29kZXJzIiwiX2lkIjoiNjUzMzBlN2YwZTE2YmJlNzNlZDFlMWMyIn1dLCJfX3YiOjAsImlhdCI6MTcwOTIzOTY5NywiZXhwIjoxNzA5MzI2MDk3fQ.5pzJcA1iUDAATQiIgEMPbDwTIDEa6muucxdGFtp4G",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"1234@Testes\",\r\n  \"confirmPassword\": \"1234@Testes\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar password senhas diferentes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 400 Bad Request\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'error'\r",
+											"pm.test(\"A resposta deve conter um array 'error'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'error' contém a mensagem correta\r",
+											"pm.test(\"O array 'error' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().error).to.include(\"As senhas não coincidem.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"{{Password9}}\",\r\n  \"confirmPassword\": \"{{Password13}}\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/user/password/{{ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"password",
+										"{{ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "apikey",
+						"apikey": [
+							{
+								"key": "in",
+								"value": "query",
+								"type": "string"
+							},
+							{
+								"key": "value",
+								"value": "{{tokenEdit}}",
+								"type": "string"
+							},
+							{
+								"key": "key",
+								"value": "token",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{tokenAdmin}}",
+						"type": "string"
+					},
+					{
+						"key": "in",
+						"value": "query",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "token",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Department",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "token admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.globals.set(\"tokenAdmin\", JSON.parse(responseBody).token);\r",
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"mail\": \"{{mailAdmin}}\",\r\n  \"password\": \"{{passwordAdmin}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/login",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Incluir Diretoria com sucesso",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar um nome de diretoria brasileira\r",
+											"function generateBrazilianBoardName() {\r",
+											"    const brazilianBoards = [\r",
+											"        \"Administração&&&&\", \"Finanças&&&&\", \"Recursos Humanos&&&&\", \"Marketing&&&&\", \"Vendas&&&&\",\r",
+											"        \"Tecnologia da Informação&&&&\", \"Produção&&&&\", \"Logística&&&&\", \"Qualidade&&&&\", \"Inovação&&&&\",\r",
+											"        \"Desenvolvimento&&&&\", \"Operações&&&&\", \"Compras&&&&\", \"Comunicação&&&&\", \"Jurídico&&&&\",\"Administração&&&&&\", \"Finanças&&&&&\", \"Recursos Humanos&&&&&\", \"Marketing&&&&&\", \"Vendas&&&&&\",\r",
+											"        \"Tecnologia da Informação&&&&&\", \"Produção&&&&&\", \"Logística&&&&&\", \"Qualidade&&&&&\", \"Inovação&&&&&\",\r",
+											"        \"Desenvolvimento&&&&&\", \"Operações&&&&&\", \"Compras&&&&&\", \"Comunicação&&&&&\", \"Jurídico&&&&&\",\r",
+											"        // Adicione mais diretorias conforme necessário\r",
+											"    ];\r",
+											"\r",
+											"    const randomBoard = brazilianBoards[Math.floor(Math.random() * brazilianBoards.length)];\r",
+											"\r",
+											"    return randomBoard;\r",
+											"}\r",
+											"\r",
+											"// Chama a função para gerar um nome de diretoria brasileira e armazena na variável \"boardName\"\r",
+											"\r",
+											"const boardName = (generateBrazilianBoardName() + pm.variables.replaceIn('{{$randomAbbreviation}}'));\r",
+											"\r",
+											"// Exibe o nome da diretoria no console do Postman\r",
+											"console.log(\"Diretoria gerada:\", boardName);\r",
+											"\r",
+											"// Armazena o nome da diretoria na variável de ambiente \"BoardName\"\r",
+											"pm.environment.set(\"BoardName\", boardName);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.globals.set(\"boardID\", pm.variables.replaceIn(JSON.parse(responseBody).newBoard._id));\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"boardName\": \"{{BoardName}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/board/",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pesquisar Diretoria",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// Log do responseBody\r",
+											"console.log(\"responseBody:\", responseBody);\r",
+											"\r",
+											"try {\r",
+											"    // Parse do responseBody para JSON e acesso ao _id\r",
+											"    const rawBoardID = JSON.parse(responseBody).newBoard._id;\r",
+											"    \r",
+											"    // Log do _id antes da substituição\r",
+											"    console.log(\"rawBoardID:\", rawBoardID);\r",
+											"    \r",
+											"    // Substituição de variáveis e definição da variável de ambiente\r",
+											"    const boardID = pm.variables.replaceIn(rawBoardID);\r",
+											"    pm.environment.set(\"boardID\", boardID);\r",
+											"    \r",
+											"    // Log do boardID após a substituição\r",
+											"    console.log(\"boardID:\", boardID);\r",
+											"    \r",
+											"} catch (error) {\r",
+											"    console.error(\"Erro ao extrair o boardID:\", error);\r",
+											"}\r",
+											"\r",
+											"// Imprimir o valor da variável de ambiente boardID\r",
+											"console.log(\"Valor da variável de ambiente boardID:\", pm.environment.get(\"boardID\"));"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar um nome de diretoria brasileira\r",
+											"function generateBrazilianBoardName() {\r",
+											"    const brazilianBoards = [\r",
+											"        \"Administração&&&&\", \"Finanças&&&&\", \"Recursos Humanos&&&&\", \"Marketing&&&&\", \"Vendas&&&&\",\r",
+											"        \"Tecnologia da Informação&&&&\", \"Produção&&&&\", \"Logística&&&&\", \"Qualidade&&&&\", \"Inovação&&&&\",\r",
+											"        \"Desenvolvimento&&&&\", \"Operações&&&&\", \"Compras&&&&\", \"Comunicação&&&&\", \"Jurídico&&&&\",\"Administração&&&&&\", \"Finanças&&&&&\", \"Recursos Humanos&&&&&\", \"Marketing&&&&&\", \"Vendas&&&&&\",\r",
+											"        \"Tecnologia da Informação&&&&&\", \"Produção&&&&&\", \"Logística&&&&&\", \"Qualidade&&&&&\", \"Inovação&&&&&\",\r",
+											"        \"Desenvolvimento&&&&&\", \"Operações&&&&&\", \"Compras&&&&&\", \"Comunicação&&&&&\", \"Jurídico&&&&&\",\r",
+											"        // Adicione mais diretorias conforme necessário\r",
+											"    ];\r",
+											"\r",
+											"    const randomBoard = brazilianBoards[Math.floor(Math.random() * brazilianBoards.length)];\r",
+											"\r",
+											"    return randomBoard;\r",
+											"}\r",
+											"\r",
+											"// Chama a função para gerar um nome de diretoria brasileira e armazena na variável \"boardName\"\r",
+											"\r",
+											"const boardName = (generateBrazilianBoardName() + pm.variables.replaceIn('{{$randomAbbreviation}}'));\r",
+											"\r",
+											"// Exibe o nome da diretoria no console do Postman\r",
+											"console.log(\"Diretoria gerada:\", boardName);\r",
+											"\r",
+											"// Armazena o nome da diretoria na variável de ambiente \"BoardName\"\r",
+											"pm.environment.set(\"BoardName\", boardName);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/board/",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"board",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Incluir centro de custos com sucesso",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Função para gerar um nome de centro de custo brasileiro\r",
+											"function generateBrazilianCostCenterName() {\r",
+											"    const brazilianCostCenters = [\r",
+											"        \"Financeiro&&&&\", \"RH&&&&\", \"Marketing&&&&\", \"Vendas&&&&\", \"TI&&&&\",\r",
+											"        \"Produção&&&&\", \"Logística&&&&\", \"Qualidade&&&&\", \"Inovação&&&&\",\r",
+											"        \"Desenvolvimento&&&&\", \"Operações&&&&\", \"Compras&&&&\", \"Comunicação&&&&\", \"Jurídico&&&&\",\r",
+											"        // Adicione mais centros de custo conforme necessário\r",
+											"    ];\r",
+											"\r",
+											"    const randomCostCenter = brazilianCostCenters[Math.floor(Math.random() * brazilianCostCenters.length)];\r",
+											"\r",
+											"    return randomCostCenter;\r",
+											"}\r",
+											"\r",
+											"// Chama a função para gerar um nome de centro de custo brasileiro e armazena na variável \"costCenterName\"\r",
+											"const costCenterName = (generateBrazilianCostCenterName() + pm.variables.replaceIn('{{$randomAbbreviation}}'));\r",
+											"\r",
+											"// Exibe o nome do centro de custo no console do Postman\r",
+											"console.log(\"Centro de custo gerado:\", costCenterName);\r",
+											"\r",
+											"// Armazena o nome do centro de custo na variável de ambiente \"CostCenterName\"\r",
+											"pm.environment.set(\"CostCenterName\", costCenterName);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.globals.set(\"costCenterId\", pm.variables.replaceIn(JSON.parse(responseBody).newCostCenter._id));"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"costCenterName\": \"{{CostCenterName}}\",\r\n    \"boardId\": \"{{boardID}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/costCenter/",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"costCenter",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar departamento",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 200 OK\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"A resposta deve ser um array\", function () {\r",
+											"    pm.expect(pm.response.json()).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array contém múltiplos objetos válidos de departamentos\r",
+											"pm.test(\"O array deve conter múltiplos objetos válidos de departamentos\", function () {\r",
+											"    var departments = pm.response.json();\r",
+											"    \r",
+											"    // Verifica se o array tem mais de um item\r",
+											"    pm.expect(departments.length).to.be.above(1);\r",
+											"    \r",
+											"    // Verifica se cada item do array é um objeto\r",
+											"    departments.forEach(function(department) {\r",
+											"        pm.expect(department).to.be.an('object');\r",
+											"        \r",
+											"        // Verifica as propriedades do objeto de departamento\r",
+											"        pm.expect(department).to.have.property('_id').that.is.a('string');\r",
+											"        pm.expect(department).to.have.property('departmentName').that.is.a('string');\r",
+											"        pm.expect(department).to.have.property('costCenter').that.is.an('object');\r",
+											"        pm.expect(department).to.have.property('status').that.is.a('boolean');\r",
+											"        pm.expect(department).to.have.property('audit').that.is.an('array');\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/department",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"department"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar departamento sem token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém um array 'errors'\r",
+											"pm.test(\"A resposta deve conter um array 'errors'\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('errors').that.is.an('array');\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'errors' contém a mensagem correta\r",
+											"pm.test(\"O array 'errors' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().errors).to.include(\"No token provided.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/department",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"department"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar departamento token inválido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"// Verifica se o array 'errors' contém a mensagem correta\r",
+											"pm.test(\"O array 'errors' deve conter a mensagem correta\", function () {\r",
+											"    pm.expect(pm.response.json().errors).to.include(\"Failed to authenticate token.\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTMzMGZiMTNiZjBhMmQ4MGU5ZjVlMmMiLCJmdWxsTmFtZSI6IlFhLUNvZGVycy1TWVNBRE1JTiIsIm1haWwiOiJzeXNhZG1pbkBxYWNvZGVycy5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR3TkRuT1RLUXp4bE1kbzJ5ekFSUjFPWkVSSlNlOVQ5RzZlQ1ROMEFJQzREMXBlZExML2VLUyIsImFjY2Vzc1Byb2ZpbGUiOiJTWVNBRE1JTiIsImNwZiI6IjExMTExMTExMTExIiwic3RhdHVzIjp0cnVlLCJhdWRpdCI6W3sicmVnaXN0ZXJlZEJ5Ijp7InVzZXJJZCI6IjExMTExMTExMTExMTExMTExMSIsInVzZXJMb2dpbiI6InN5c2FkbWluQHFhY29kZXJzLmNvbSJ9LCJyZWdpc3RyYXRpb25EYXRlIjoic2V4dGEtZmVpcmEsIDIwLzEwLzIwMjMsIDIwOjM5OjI5IEJSVCIsInJlZ2lzdHJhdGlvbk51bWJlciI6IjAxIiwiY29tcGFueUlkIjoiUWEuQ29kZXJzIiwiX2lkIjoiNjUzMzBmYjEzYmYwYTJkODBlOWY1ZTJkIn1dLCJfX3YiOjAsImlhdCI6MTcxMTE0NTU5MSwiZXhwIjoxNzExMjMxOTkxfQ.C8mrFN7E9bsd5UlRbTHMPJ5775apMNUxpvx3CM3JS",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/department",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"department"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar departamento Count",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should contain the correct count information\", function () {\r",
+											"    const responseBody = pm.response.json();\r",
+											"\r",
+											"    // Verifica se o response contém a propriedade 'count' e se é um número\r",
+											"    pm.expect(responseBody).to.have.property(\"count\").that.is.a(\"number\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/department/count",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar departamento ID inválido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status da resposta deve ser 500 Internal Server Error\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											"\r",
+											"// Verifica se a resposta contém a mensagem de erro correta\r",
+											"pm.test(\"A resposta deve conter a mensagem de erro correta\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property('error', 'CastError: Cast to ObjectId failed for value \"65fe0cd72666bf11c8208d\" (type string) at path \"_id\" for model \"Department\"');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/api/department/65fe0cd72666bf11c8208d",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"65fe0cd72666bf11c8208d"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "in",
+						"value": "query",
+						"type": "string"
+					},
+					{
+						"key": "value",
+						"value": "{{tokenAdmin}}",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "token",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
