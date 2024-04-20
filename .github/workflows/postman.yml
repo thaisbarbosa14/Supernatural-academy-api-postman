@@ -22,7 +22,7 @@ jobs:
         node-version: '20'
 
     - name: Create Docs Directory
-      run: mkdir -p ./docs
+      run: mkdir -p ./results/Report
 
     - name: Install Newman
       run: npm install -g newman
@@ -37,15 +37,10 @@ jobs:
           --reporter-htmlextra-title "Report Supernatural" \
           --reporter-htmlextra-export ./docs/index.html
 
-    - name: Verify Report File
-      run: |
-        pwd
-        ls -l
-        ls -l ./docs/
-
+   
     - name: Upload Test Report
       if: success()
       uses: actions/upload-artifact@v2
       with:
         name: test-report
-        path: ./docs/index.html
+        path: ./results/Report.html
