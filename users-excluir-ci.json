@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Excluir cadastro de login",
+			"name": "Login",
 			"item": [
 				{
 					"name": "Realizando o Login com sucesso",
@@ -17,7 +17,8 @@
 							"script": {
 								"exec": [
 									"//Salvar o token na variavel global\r",
-									"pm.globals.set(\"tokenLogin\", JSON.parse(responseBody).token);\r",
+									"pm.environment.set(\"tokenLogin\", JSON.parse(responseBody).token);\r",
+									"\r",
 									"\r",
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
@@ -25,7 +26,8 @@
 									"\r",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -54,7 +56,12 @@
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Excluir cadastro de login",
+			"item": [
 				{
 					"name": "Contagem atual de usuários cadastrados",
 					"event": [
@@ -560,6 +567,48 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "key",
+						"value": "token",
+						"type": "string"
+					},
+					{
+						"key": "in",
+						"value": "query",
+						"type": "string"
+					},
+					{
+						"key": "value",
+						"value": "{{tokenLogin}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}
