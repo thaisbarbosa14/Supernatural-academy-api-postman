@@ -28,7 +28,7 @@ jobs:
 
   # Runs a single command using the runners shell
     - name: Step 3 Execute collection
-      run: newman run ./users-excluir-ci.json -e ./testes-env.json --reporters cli, -r htmlextra --reporter-htmlextra-browserTitle "Report API Supernatural" --reporter-htmlextra-title "Report API Supernatural - Users/Delete" --reporter-htmlextra-export ./docs/index.html
+      run: newman run ./UsersDelete_ci.json -e ./TestesEnv.json --reporters cli, -r htmlextra --reporter-htmlextra-browserTitle "Report API Supernatural" --reporter-htmlextra-title "Report API Supernatural Users/Delete" --reporter-htmlextra-export ./docs/index.html
 
     - name: Upload Test Report
       if: success()
