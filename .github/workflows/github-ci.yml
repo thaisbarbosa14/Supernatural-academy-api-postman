@@ -1,5 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-name: CI
+name: Users Delete
 
 # Controls when the workflow will run
 on:
@@ -22,7 +22,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Check out the repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4  # Atualize aqui para a versão mais recente v4
 
       # Step 1 - Check versions of Newman and Node
       - name: Check versions
@@ -45,6 +45,3 @@ jobs:
         with:
           name: report
           path: ./results/Report.html
-
-
-      
