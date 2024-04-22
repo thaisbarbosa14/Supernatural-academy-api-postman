@@ -1,47 +1,38 @@
-# This is a basic workflow to help you get started with Actions
-name: Users Delete
+name: Postman - Users/Delete
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  test:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Check out the repository
-      - uses: actions/checkout@v4  # Atualize aqui para a versão mais recente v4
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      # Step 1 - Check versions of Newman and Node
-      - name: Check versions
-        run: |
+  # Runs a single command using the runners shell
+    - name: Step 1 Check version Newman and Node
+      run: |
           newman --version
           node --version
+          
+    # Runs a single command using the runners shell
+    - name: Step 2 Install Newman-Reporter-HtmlExtra
+      run: sudo npm install -g newman-reporter-htmlextra
 
-      # Step 2 - Install newman-reporter-htmlextra
-      - name: Install newman-reporter-htmlextra
-        run: sudo npm install -g newman-reporter-htmlextra
+  # Runs a single command using the runners shell
+    - name: Step 3 Execute collection
+      run: newman run ./users-excluir-ci.json -e ./testes-env.json --reporters cli, -r htmlextra --reporter-htmlextra-browserTitle "Report API Supernatural" --reporter-htmlextra-title "Report API Supernatural - Users/Delete" --reporter-htmlextra-export ./docs/index.html
 
-      # Step 3 - Execute collection
-      - name: Execute collection
-        run: |
-          newman run ./users-excluir-ci.json -e ./testes-env.json --reporters cli,htmlextra --reporter-htmlextra-export ./results/Report.html
-
-      # Step 4 - Archive production artifacts
-      - name: Archive report artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: report
-          path: ./results/Report.html
+    - name: Upload Test Report
+      if: success()
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-report
+        path: ./docs/index.html
