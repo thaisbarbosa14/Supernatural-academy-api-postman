@@ -16,15 +16,17 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"//Salvar o token na variavel global\r",
-									"pm.environment.set(\"tokenLogin\", JSON.parse(responseBody).token);\r",
-									"\r",
-									"\r",
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									""
+									"//Salvar o token na variável global",
+					                                "pm.environment.set(\"tokenLogin\", JSON.parse(responseBody).token);",
+					                                "",
+					                                "pm.test(\"Status code is 200\", function () {",
+					                                "    pm.response.to.have.status(200);",
+					                                "});",
+					                                "",
+					                                "// Adicionando novo teste para verificar se a resposta contém a string especificada",
+					                                "pm.test(\"Body matches string\", function () {",
+					                                "    pm.expect(pm.response.text()).to.include(\"Olá Qa-Coders-SYSADMIN, autenticação autorizada com sucesso!\");",
+					                                "});"
 								],
 								"type": "text/javascript",
 								"packages": {}
