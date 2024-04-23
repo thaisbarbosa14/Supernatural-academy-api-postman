@@ -25,6 +25,31 @@ jobs:
     # Instala o newman-reporter-htmlextra
     - name: Step 2 Install Newman-Reporter-HtmlExtra
       run: npm install -g newman-reporter-htmlextra
+   
+   # Verificar se os arquivos existem - Colletion e Env.
+    - name: Verificar se os arquivos existem
+      run: |
+          if [ -e "./UsersDelete_ci.json" ]; then
+                echo "O arquivo UsersDelete_ci.json existe."
+              else
+                echo "O arquivo UsersDelete_ci.json não existe."
+                exit 1
+              fi
+          
+              if [ -e "./TestesEnv.json" ]; then
+                echo "O arquivo TestesEnv.json existe."
+              else
+                echo "O arquivo TestesEnv.json não existe."
+                exit 1
+              fi
+
+   # Verificar o conteudo dos arquivos
+    - name: Verificar conteúdo dos arquivos
+      run: |
+        echo "Conteúdo do arquivo UsersDelete_ci.json:"
+        cat ./UsersDelete_ci.json
+        echo "Conteúdo do arquivo TestesEnv.json:"
+        cat ./TestesEnv.json
 
     # Executa a coleção
     - name: Step 3 Execute collection
