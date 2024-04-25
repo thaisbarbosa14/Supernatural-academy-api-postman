@@ -1,8 +1,8 @@
 # Postman CI com GitHub Actions
 
-Este repositório contém um workflow do GitHub Actions configurado para executar testes de API do Postman usando o Newman e gerar um relatório HTML usando o reporter Htmlextra.
+Este repositório contém um workflow do GitHub Actions configurado para executar testes de API com Postman e gerar um relatório HTML usando o reporter Htmlextra.
 
-## Estrutura do Arquivo YAML do Workflow
+## Passo a passo e estrutura do Arquivo YAML do Workflow
 
 O arquivo `yml` do workflow define os seguintes passos:
 
