@@ -1,0 +1,63 @@
+{
+	"id": "2ce49bcd-c8b4-444d-91a1-6654cb65143f",
+	"name": "Supernatural",
+	"values": [
+		{
+			"key": "FirstName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "LastName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FullName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Domain",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "User",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Mail",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CPF",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "corporate",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-04-27T01:39:28.744Z",
+	"_postman_exported_using": "Postman/10.24.24"
+}
