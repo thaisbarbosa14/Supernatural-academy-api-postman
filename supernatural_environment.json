@@ -1,0 +1,117 @@
+{
+	"id": "10208087-84b8-4cb5-8d80-13feeea2ce7f",
+	"name": "New Environment",
+	"values": [
+		{
+			"key": "CostCenterName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "BoardName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FirstName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "LastName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FullName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "cpf",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Domain",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Email",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "EmailEdit",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password7",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password8",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password9",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password11",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password12",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password13",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password15",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password16",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Password17",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-04-20T14:04:06.399Z",
+	"_postman_exported_using": "Postman/10.24.22"
+}
