@@ -1,0 +1,797 @@
+{
+	"info": {
+		"_postman_id": "d49e7665-5113-497a-837c-ac7483569139",
+		"name": "Departament - Status",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27946330"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Realizando o Login com sucesso",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Salvar o token na variavel global\r",
+									"pm.environment.set(\"tokenLogin\", JSON.parse(responseBody).token);\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Olá Qa-Coders-SYSADMIN, autenticação autorizada com sucesso!\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"mail\": \"{{emailAdm}}\",\r\n  \"password\": \"{{senhaAdm}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/api/login/",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"api",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Department",
+			"item": [
+				{
+					"name": "Status Ativar/Inativar",
+					"item": [
+						{
+							"name": "cadastro board",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Cadastro realizado com sucesso!\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"//Pegar o ID\r",
+											"pm.test(\"Retrieve and save department ID\", function () {\r",
+											"    var responseJSON = pm.response.json();\r",
+											"    if (responseJSON.newBoard) {\r",
+											"        pm.environment.set(\"id_board\", responseJSON.newBoard._id);\r",
+											"    } else {\r",
+											"        pm.expect(responseJSON.newBoard).to.exist;\r",
+											"    }\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"boardName\",pm.variables.replaceIn('{{$randomLoremWord}}'))\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"boardName\": \"{{boardName}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/api/board",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"api",
+										"board"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "cadastro Centro de Custo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Cadastro realizado com sucesso.\");\r",
+											"});\r",
+											"\r",
+											"//Pegar o ID para usar nos proximos testes.\r",
+											"pm.test(\"Retrieve and save department ID\", function () {\r",
+											"    var responseJSON = pm.response.json();\r",
+											"    if (responseJSON.newCostCenter) {\r",
+											"        pm.environment.set(\"id_costCenter\", responseJSON.newCostCenter._id);\r",
+											"    } else {\r",
+											"        pm.expect(responseJSON.newCostCenter).to.exist;\r",
+											"    }\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"costCenterName\",pm.variables.replaceIn('{{$randomLoremWord}}'))\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"costCenterName\": \"{{costCenterName}}\",\r\n    \"boardId\": \"{{id_board}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/api/costCenter",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"api",
+										"costCenter"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cadastro departamento",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Cadastro realizado com sucesso.\");\r",
+											"});\r",
+											"\r",
+											"//Pegar o ID para usar nos proximos testes.\r",
+											"pm.test(\"Retrieve and save department ID\", function () {\r",
+											"    var responseJSON = pm.response.json();\r",
+											"    if (responseJSON.newDepartment) {\r",
+											"        pm.environment.set(\"id_department\", responseJSON.newDepartment._id);\r",
+											"    } else {\r",
+											"        pm.expect(responseJSON.newDepartment).to.exist;\r",
+											"    }\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"departmentName\",pm.variables.replaceIn('{{$randomLoremWord}}'))\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"departmentName\": \"{{departmentName}}\",\r\n    \"costCenterId\": \"{{id_costCenter}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/api/department",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"api",
+										"department"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Inativar um departamento ativo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"    pm.response.to.have.status(202);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Departamento inativado com sucesso!\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"status\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/api/department/status/{{id_department}}",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"status",
+										"{{id_department}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tentativa de inativar um departamento já inativo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"    pm.response.to.have.status(208);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Esse departamento já se encontra inativado.\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"status\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/api/department/status/{{id_department}}",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"status",
+										"{{id_department}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Confirmar a alteração de status para inativo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verificar se o ID está presente na lista de IDs e o status é false\", function () {\r",
+											"    // Extrair o ID salvo na variável\r",
+											"    var savedId = pm.variables.get(\"id_department\");\r",
+											"    \r",
+											"    // Converter o corpo da resposta para JSON\r",
+											"    var responseBody = pm.response.json();\r",
+											"    \r",
+											"    // Extrair a lista de IDs do corpo da resposta\r",
+											"    var ids = responseBody.map(function(item) {\r",
+											"        return item._id;\r",
+											"    });\r",
+											"    \r",
+											"    // Verificar se o ID salvo está presente na lista de IDs\r",
+											"    pm.expect(ids).to.include(savedId);\r",
+											"\r",
+											"    // Encontrar o objeto com o ID salvo\r",
+											"    var objetoComID = responseBody.find(objeto => objeto._id === savedId);\r",
+											"\r",
+											"    // Verificar se o status do objeto é false\r",
+											"    pm.expect(objetoComID.status).to.equal(false);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_base}}/api/department",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"api",
+										"department"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ativar um departamento inativo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 202\", function () {\r",
+											"    pm.response.to.have.status(202);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"status\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/api/department/status/{{id_department}}",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"status",
+										"{{id_department}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tentativa de ativar um departamento já ativo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 208\", function () {\r",
+											"    pm.response.to.have.status(208);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Esse departamento já se encontra ativado.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"status\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/api/department/status/{{id_department}}",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"status",
+										"{{id_department}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Confirmar a alteração de status para Ativo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verificar se o ID está presente na lista de IDs e o status é true\", function () {\r",
+											"    // Extrair o ID salvo na variável\r",
+											"    var savedId = pm.variables.get(\"id_department\");\r",
+											"    \r",
+											"    // Converter o corpo da resposta para JSON\r",
+											"    var responseBody = pm.response.json();\r",
+											"    \r",
+											"    // Extrair a lista de IDs do corpo da resposta\r",
+											"    var ids = responseBody.map(function(item) {\r",
+											"        return item._id;\r",
+											"    });\r",
+											"    \r",
+											"    // Verificar se o ID salvo está presente na lista \r",
+											"    pm.expect(ids).to.include(savedId);\r",
+											"\r",
+											"    // Encontrar o objeto com o ID salvo\r",
+											"    var objetoComID = responseBody.find(objeto => objeto._id === savedId);\r",
+											"\r",
+											"    // Verificar se o status do objeto é false\r",
+											"    pm.expect(objetoComID.status).to.equal(true);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_base}}/api/department",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"api",
+										"department"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Informando ID inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Não foi possível encontrar a departamento com o id especificado\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"status\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/api/department/status/12fca5522666bf11c8208b4d",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"status",
+										"12fca5522666bf11c8208b4d"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tentativa de editar status sem informar o Token de acesso",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"No token provided.\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"status\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/api/department/status/{{id_department}}",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"status",
+										"{{id_department}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tentativa de editar status com Token inválido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Failed to authenticate token.\");\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Gera um número aleatório de 10 dígitos\r",
+											"function generateRandomNumber() {\r",
+											"    return Math.floor(Math.random() * 9000000000) + 1000000000;\r",
+											"}\r",
+											"\r",
+											"// Concatena o número gerado com o texto predefinido\r",
+											"const numeroPadrao = generateRandomNumber() + 'NiIsInR5cCI6IkpXVCJ9';\r",
+											"\r",
+											"// Define o número gerado como variável de ambiente para ser usado na requisição\r",
+											"pm.environment.set(\"token_invalid\", numeroPadrao);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token_invalid}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"status\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/api/department/status/{{id_department}}",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"api",
+										"department",
+										"status",
+										"{{id_department}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "in",
+						"value": "query",
+						"type": "string"
+					},
+					{
+						"key": "value",
+						"value": "{{tokenLogin}}",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "token",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}

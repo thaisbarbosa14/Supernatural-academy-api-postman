@@ -1,0 +1,135 @@
+{
+	"id": "30fe6040-b7e5-4541-a74b-c37636e9cf06",
+	"name": "Testes",
+	"values": [
+		{
+			"key": "url_base",
+			"value": "https://supernatural.qacoders-academy.com.br",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "TypeProfile",
+			"value": "ADMIN",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "FullName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "EmailUser",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "PasswordUser",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Random11Digits",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "RandomPassword",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "id_user",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "count_user",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "id_user_fake",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "TypeProfile2",
+			"value": "student",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "boardName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "id_board",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "costCenterName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "departmentName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "id_costCenter",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "id_department",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "token_invalid",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "tokenLogin",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "emailAdm",
+			"value": "sysadmin@qacoders.com",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "senhaAdm",
+			"value": "1234@Test",
+			"type": "secret",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-04-22T19:56:51.098Z",
+	"_postman_exported_using": "Postman/10.24.18"
+}

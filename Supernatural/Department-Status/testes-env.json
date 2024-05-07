@@ -118,13 +118,13 @@
 		},
 		{
 			"key": "emailAdm",
-			"value": "",
+			"value": "sysadmin@qacoders.com",
 			"type": "secret",
 			"enabled": true
 		},
 		{
 			"key": "senhaAdm",
-			"value": "",
+			"value": "1234@Test",
 			"type": "secret",
 			"enabled": true
 		}

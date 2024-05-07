@@ -1,0 +1,41 @@
+name: Postman CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    # Verificar versão do Newman e Node.js
+    - name: Check version Newman and Node
+      run: |
+        newman --version
+        node --version
+
+    # Instalar newman-reporter-htmlextra
+    - name: Install Newman-Reporter-HtmlExtra
+      run: |
+        sudo npm install -g newman-reporter-htmlextra
+
+    # Executar a coleção com ambiente especificado
+    - name: Execute collection
+      run: |
+        newman run Supernatural/Users-Delete/users-excluir-ci.json -e Supernatural/Users-Delete/testes-env.json --reporters cli,htmlextra --reporter-htmlextra-export Supernatural/Users-Delete/docs/index.html
+
+    # Carregar relatório de teste
+    - name: Upload Test Report
+      if: ${{ success() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-report
+        path: Supernatural/Users-Delete/docs/index.html
