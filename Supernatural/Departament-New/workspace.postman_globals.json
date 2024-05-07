@@ -1,0 +1,63 @@
+{
+	"id": "96468221-b3c3-4e0c-83dc-cae5fb264fbf",
+	"values": [
+		{
+			"key": "URL",
+			"value": "https://supernatural.qacoders-academy.com.br/",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "tokenAdmin",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "emailAdmin",
+			"value": "sysadmin@qacoders.com",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "passWordAdmin",
+			"value": "1234@Test",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "tokenLogin",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "id_board",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "mail_login",
+			"value": "sysadmin@qacoders.com",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "password_login",
+			"value": "1234@Test",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "id",
+			"value": "65e071beb3cb7c4857f09882",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2024-05-07T00:18:18.429Z",
+	"_postman_exported_using": "Postman/10.24.22"
+}
