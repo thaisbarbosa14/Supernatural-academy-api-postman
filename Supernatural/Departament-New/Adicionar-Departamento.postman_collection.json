@@ -1,0 +1,817 @@
+{
+	"info": {
+		"_postman_id": "2af9dcb8-a8fd-489c-b9f5-ca37f124ec3d",
+		"name": "Adicionar-Departamento",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33144754"
+	},
+	"item": [
+		{
+			"name": "Departamento",
+			"item": [
+				{
+					"name": "Funcional - Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Salvar o token na variavel global\r",
+									"pm.globals.set(\"tokenLogin\", JSON.parse(responseBody).token);\r",
+									"// Validar o status da requisição\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function (){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Olá Qa-Coders-SYSADMIN, autenticação autorizada com sucesso!\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"{{mail_login}}\",\r\n    \"password\": \"{{password_login}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/login/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Funcional - Criar Board",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Cadastro realizado com sucesso!\");\r",
+									"});\r",
+									"// Extrair o ID do corpo da resposta JSON\r",
+									"pm.test(\"Retrieve and save department ID\", function () {\r",
+									"    var responseJSON = pm.response.json();\r",
+									"    if (responseJSON.newBoard) {\r",
+									"        pm.environment.set(\"id_board\", responseJSON.newBoard._id);\r",
+									"    } else {\r",
+									"        pm.expect(responseJSON.newBoard).to.exist;\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//var randomDepartment = pm.variables.replaceIn('{{$randomDepartment}}');\r",
+									"//pm.environment.set(\"randomDepartment\", randomDepartment);\r",
+									"pm.variables.set('boardName',pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"boardName\": \"{{boardName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/board/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Funcional - Criar CostCenter",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('costCenterName', pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"//pm.environment.set(\"boardId\", pm.variables.replaceIn('{{$boarId}}'));\r",
+									"//pm.environment.set('boardId', pm.variables.replaceIn('{{$idDaRequisicao}}'));\r",
+									"//var randomDepartment = pm.variables.replaceIn('{{$randomDepartment}}');\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Cadastro realizado com sucesso.\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Retrieve and save department ID\", function () {\r",
+									"    var responseJSON = pm.response.json();\r",
+									"    if (responseJSON.newCostCenter) {\r",
+									"        pm.environment.set(\"id_cost\", responseJSON.newCostCenter._id);\r",
+									"    } else {\r",
+									"        pm.expect(responseJSON.newCostCenter).to.exist;\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"costCenterName\": \"{{costCenterName}}\",\r\n  \"boardId\": \"{{id_board}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/costCenter/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"costCenter",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Funcional - Incluir Departamento com sucesso",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('departmentName', pm.variables.replaceIn('{{$randomFirstName}}' + '&'));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Cadastro realizado com sucesso.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"departmentName\": \"{{departmentName}}\",\r\n    \"costCenterId\": \"{{id_cost}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/department/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Funcional - Trazer lista de departamentos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Successful 200 request', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"})",
+									"",
+									"pm.test(\"Retrieve and save department ID\", function () {",
+									"    var responseBody = pm.response.json();",
+									"    var departamentos = responseBody;",
+									"    var departamentoAleatorio = departamentos[Math.floor(Math.random() * departamentos.length)];",
+									"    var nomeAleatorio = departamentoAleatorio.departmentName;",
+									"    pm.environment.set(\"dp_name\", nomeAleatorio);",
+									"    pm.expect(departamentoAleatorio).to.exist;",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/department/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nao Funcional - Incluir Departamento Com nome existente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Não é possível salvar esse registro. Departamento já cadastrado no sistema.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('departmentName', pm.variables.replaceIn('{{$randomFirstName}}'));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"departmentName\": \"{{dp_name}}\",\r\n    \"costCenterId\": \"{{id_cost}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/department/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nao funcional - Incluir Departamento com \"departmentName\" vazio",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"O campo 'departamento' é obrigatório.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"\",\r\n  \"costCenterId\":\"{{id_cost}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/department/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nao funcional - Incluir Departamento com \"costCenterId\" vazio",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('departmentName', pm.variables.replaceIn('{{$randomFirstName}}'))\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"O campo 'ID do centro de custos' é obrigatório.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{departmentName}}\",\r\n  \"costCenterId\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/department/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Funcional - Incluir Departamento com caractere especial \"&\"",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('departmentName', pm.variables.replaceIn('{{$randomFirstName}}'+ \"&\"))\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+									"});\r",
+									"    \r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Cadastro realizado com sucesso.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{departmentName}}\",\r\n  \"costCenterId\":\"{{id_cost}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/department/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nao Funcional - Incluir Departamento com caracteres especiais nao permitidos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generateRandomString(length) {\r",
+									"    var charset = \"!@#$%^*()-_+={}[]|\\\\:;'\\\"<>,./?0123456789\";\r",
+									"    var result = \"\";\r",
+									"    for (var i = 0; i < length; i++) {\r",
+									"        var randomIndex = Math.floor(Math.random() * charset.length);\r",
+									"        result += charset.charAt(randomIndex);\r",
+									"    }\r",
+									"    return result;\r",
+									"}\r",
+									"// Gerar uma string aleatória de 10 caracteres\r",
+									"var randomString = generateRandomString(1);\r",
+									"// Definir o valor da variável randomString no ambiente do Postman\r",
+									"pm.variables.set('randomString', pm.variables.replaceIn(randomString));\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"O campo 'departamento' só pode conter letras e o caractere especial '&'.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{randomString}}\",\r\n  \"costCenterId\":\"{{id_cost}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/department/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Funcional - Incluir Departamento com 50 caracteres",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Gerar uma string de 50 caracteres\r",
+									"var randomString = \"\";\r",
+									"\r",
+									"// Definir o comprimento desejado da string\r",
+									"var length = 50;\r",
+									"\r",
+									"// Lista de caracteres válidos (letras minúsculas, maiúsculas e números)\r",
+									"var charset = \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\";\r",
+									"\r",
+									"// Loop para adicionar caracteres à string\r",
+									"for (var i = 0; i < length; i++) {\r",
+									"    // Obter um caractere aleatório do conjunto de caracteres válidos\r",
+									"    var randomChar = charset.charAt(Math.floor(Math.random() * charset.length));\r",
+									"    // Adicionar o caractere à string\r",
+									"    randomString += randomChar;\r",
+									"}\r",
+									"\r",
+									"\r",
+									"// Definir o valor da variável randomString no ambiente do Postman\r",
+									"pm.variables.set('randomString', pm.variables.replaceIn(randomString));\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Cadastro realizado com sucesso.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{randomString}}\",\r\n  \"costCenterId\":\"{{id_cost}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/department/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nao Funcional - Incluir Departamento com 51 caracteres",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Gerar uma string de 50 caracteres\r",
+									"var randomString = \"\";\r",
+									"\r",
+									"// Definir o comprimento desejado da string\r",
+									"var length = 51;\r",
+									"\r",
+									"// Lista de caracteres válidos (letras minúsculas, maiúsculas e números)\r",
+									"var charset = \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\";\r",
+									"\r",
+									"// Loop para adicionar caracteres à string\r",
+									"for (var i = 0; i < length; i++) {\r",
+									"    // Obter um caractere aleatório do conjunto de caracteres válidos\r",
+									"    var randomChar = charset.charAt(Math.floor(Math.random() * charset.length));\r",
+									"    // Adicionar o caractere à string\r",
+									"    randomString += randomChar;\r",
+									"}\r",
+									"\r",
+									"\r",
+									"// Definir o valor da variável randomString no ambiente do Postman\r",
+									"pm.variables.set('randomString', pm.variables.replaceIn(randomString));\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"O campo 'departamento' deve possuir no máximo 50 caracteres.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"departmentName\": \"{{randomString}}\",\r\n  \"costCenterId\":\"{{id_cost}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/department/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"department",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{tokenLogin}}",
+						"type": "string"
+					},
+					{
+						"key": "in",
+						"value": "query",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "token",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
