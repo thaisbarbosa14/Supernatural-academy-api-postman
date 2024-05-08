@@ -1,0 +1,87 @@
+{
+	"id": "820e8360-98cb-4e29-99a0-c7f5af0a96b0",
+	"name": "Supernatural_QA",
+	"values": [
+		{
+			"key": "BaseURL",
+			"value": "https://supernatural.qacoders-academy.com.br",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "tokenSysAdmin",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "emailUsuarioAdmin",
+			"value": "beth@gmail.com.br",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "senhaUsuarioAdmin",
+			"value": "1234@Test",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "tokenUsuarioAdmin",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "NomeDepartamento",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Email",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CPF",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FirstName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "LastName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "IdUsuario",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "tokenSysAdimin",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FullName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-05-07T22:22:33.229Z",
+	"_postman_exported_using": "Postman/11.0.7"
+}
