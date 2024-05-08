@@ -1,0 +1,96 @@
+{
+	"id": "7b52b57b-c891-40a0-81fa-b8de14a096fa",
+	"values": [
+		{
+			"key": "tokenAdmin",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "mailAdmin",
+			"value": "sysadmin@qacoders.com",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "passwordAdmin",
+			"value": "1234@Test",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "Password",
+			"value": "1234@Test",
+			"enabled": true
+		},
+		{
+			"key": "accessProfile",
+			"value": "ADMIN",
+			"enabled": true
+		},
+		{
+			"key": "tokenUser",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "URL",
+			"value": "https://supernatural.qacoders-academy.com.br",
+			"enabled": true
+		},
+		{
+			"key": "boardID",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "costCenterId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "departmentName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "departmentID",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "ID",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "emailEdit",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "tokenEdit",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2024-05-07T21:59:21.130Z",
+	"_postman_exported_using": "Postman/10.24.24"
+}
