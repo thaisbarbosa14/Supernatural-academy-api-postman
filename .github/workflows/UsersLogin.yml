@@ -31,7 +31,7 @@ jobs:
     - name: Execute collection
       run: |
       
-        newman run supernatural-api-postman/Users-Login.json -e supernatural-api-postman/Supernatural_QA-env.json  --reporters cli,htmlextra --reporter-htmlextra-export supernatural-api-postman/docs/index.html
+        newman run Supernatural/Users-Login/Auth.json -e Supernatural/Users-Login/Supernatural_QA-env.json  --reporters cli,htmlextra --reporter-htmlextra-export Supernatural/Users-Login/docs/index.html
 
 
 
@@ -41,4 +41,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: test-report
-        path: supernatural-api-postman/docs/index.html
+        path: Supernatural/Users-Login/docs/index.html
