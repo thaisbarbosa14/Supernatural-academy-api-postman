@@ -30,7 +30,7 @@ jobs:
     # Executar a coleção com ambiente especificado
     - name: Execute collection
       run: |
-        newman run Supernatural/Users-New/Supernatural.post_users.json -e Supernatural/Users-New/Supernatural.postman_environment.json -g Supernatural/Users-New/super_globals.json --reporters cli,htmlextra --reporter-htmlextra-export Supernatural/Users-New/docs/index.html
+        newman run Supernatural/Users-New/CGehlen/Supernatural.post_users.json -e Supernatural/Users-New/CGehlen/Supernatural.postman_environment.json -g Supernatural/Users-New/CGehlen/super_globals.json --reporters cli,htmlextra --reporter-htmlextra-export Supernatural/Users-New/CGehlen/docs/index.html
 
     # Carregar relatório de teste
     - name: Upload Test Report
@@ -38,4 +38,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: test-report
-        path: Supernatural/Users-New/docs/index.html
+        path: Supernatural/Users-New/CGehlen/docs/index.html
