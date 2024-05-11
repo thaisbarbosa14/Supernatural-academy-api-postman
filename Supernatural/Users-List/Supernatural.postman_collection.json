@@ -1,0 +1,650 @@
+{
+	"info": {
+		"_postman_id": "45aa55c0-9015-4d9c-b6e6-e6302c908f7b",
+		"name": "Supernatural",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32572829"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "tokenAdmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//salvar o token na variavel global\r",
+									"pm.globals.set(\"tokenAdmin\", JSON.parse(responseBody).token);\r",
+									"\r",
+									"// validar o status da requisição\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\": \"{{emailAdmin}}\",\r\n    \"password\": \"{{passwordAdmin}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validar token",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/validateToken",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"validateToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "count user",
+					"item": [
+						{
+							"name": "contar usuarios cadastrados",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"count_user\",pm.response.json().count)\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/count",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "adicionar usuario",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"function firstName(){\r",
+											"\r",
+											"let firstName = [\"Joao\", \"Jose\", \"Maria\", \"Debora\", \"Alessandra\", \"Roberto\", \"Fabio\", \"Carla\", \"Thays\", \"Jackon\", \"Adriano\", \"Lucas\", \"Thamyres\", \"Jane\", \"Florencio\", \"Benicio\", \"Helena\"];\r",
+											"\r",
+											"let randomItem = firstName[Math.floor(Math.random() * firstName.length)];\r",
+											"\r",
+											"return randomItem\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"FirstName\",firstName());\r",
+											"\r",
+											"function lastName(){\r",
+											"\r",
+											"let lastName = [\"Silva\", \"Oliveira\", \"Moreira\", \"Kawakami\", \"Santos\", \"de Souza\", \" Scheinik\", \"Souza Santos\", \"Muller\", \"de Carvalho\", \"Nascimento\", \"Loreto\", \"Araujo\", \"Gomes\", \"Neves\", \"Santana\"];\r",
+											"\r",
+											"let randomItem = lastName[Math.floor(Math.random() * lastName.length)];\r",
+											"\r",
+											"return randomItem\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"LastName\",lastName());\r",
+											"\r",
+											"pm.environment.set(\"FullName\", pm.environment.get(\"FirstName\") + \" \" + pm.environment.get(\"LastName\"));\r",
+											"\r",
+											"function providerMail(){\r",
+											"\r",
+											"let providerMail = [\"@yahoo.com\", \"@gmail.com\", \"@bol.com.br\", \"@outlook.com\", \"@uol.com.br\", \"@globo.com\", \"@terra.com.br\"];\r",
+											"\r",
+											"let randomItem = providerMail[Math.floor(Math.random() * providerMail.length)];\r",
+											"\r",
+											"return randomItem\r",
+											"\r",
+											"}\r",
+											"\r",
+											"pm.environment.set(\"ProviderMail\",providerMail());\r",
+											"\r",
+											"pm.environment.set(\"Mail\", pm.environment.get(\"FirstName\") + \"_\" + pm.variables.replaceIn('{{$guid}}')+ pm.environment.get(\"ProviderMail\"));\r",
+											"\r",
+											"\r",
+											"var randomNumber = Math.floor(Math.random() * 100000000000);\r",
+											"\r",
+											"var random11Digits = randomNumber.toString().padStart(11,0);\r",
+											"pm.environment.set(\"Random11Digits\", random11Digits);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"id_user\",pm.response.json().user._id)\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Mail}}\",\r\n  \"password\": \"14ff@Tst\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"{{Random11Digits}}\",\r\n  \"confirmPassword\": \"14ff@Tst\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/user",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "contar usuarios cadastrados após cadastro",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Count Validator\", function (){\r",
+											"    let count = pm.variables.get(\"count_user\")+1\r",
+											"    \r",
+											"    pm.expect(count).to.eql(JSON.parse(responseBody).count);\r",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/count",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "contar usuarios cadastrados token invalido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check msg: Failed to authenticate token.\", function () {\r",
+											"    pm.expect(\"Failed to authenticate token.\").to.eql(JSON.parse(responseBody).errors[0]);\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "hghg",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/count",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "contar usuarios  cadastrados sem autorização/token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check msg: No Token provided.\", function () {\r",
+											"    pm.expect(\"No token provided.\").to.eql(JSON.parse(responseBody).errors[0]);\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/count",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"count"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "list user",
+					"item": [
+						{
+							"name": "listar usuarios  cadastrados",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar usuarios  cadastrados token invalido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check msg: Failed to authenticate token.\", function () {\r",
+											"    pm.expect(\"Failed to authenticate token.\").to.eql(JSON.parse(responseBody).errors[0]);\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "hghg",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "query",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar usuarios  cadastrados sem autorização/token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check msg: Failed to authenticate token.\", function () {\r",
+											"    pm.expect(\"No token provided.\").to.eql(JSON.parse(responseBody).errors[0]);\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "id user",
+					"item": [
+						{
+							"name": "listar usuario id válido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check FullName is true\", function () {\r",
+											"    pm.expect(pm.environment.get(\"FullName\")).to.eql(JSON.parse(responseBody).fullName);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check Mail is true\", function () {\r",
+											"    pm.expect((pm.environment.get(\"Mail\"))).to.eql(JSON.parse(responseBody).mail);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check AccessProfile is true\", function () {\r",
+											"    pm.expect(\"ADMIN\").to.eql(JSON.parse(responseBody).accessProfile);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check Status is true\", function () {\r",
+											"    pm.expect(true).to.eql(JSON.parse(responseBody).status);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/{{id_user}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{id_user}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "listar usuario -  id inexistente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check msg: Esse usuário não existe em nossa base de dados.\", function () {\r",
+											"    pm.expect(pm.variables.get(\"msg_id_inex\")).to.eql(JSON.parse(responseBody).alert[0]);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/56d61184e9b97201f7a9da0a",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"56d61184e9b97201f7a9da0a"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{tokenAdmin}}",
+						"type": "string"
+					},
+					{
+						"key": "in",
+						"value": "query",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "token",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
