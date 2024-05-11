@@ -515,6 +515,59 @@
 						}
 					]
 				},
+				{
+					"name": "id user",
+					"item": [
+						{
+							"name": "listar usuario id válido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check FullName is true\", function () {\r",
+											"    pm.expect(pm.environment.get(\"FullName\")).to.eql(JSON.parse(responseBody).fullName);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check Mail is true\", function () {\r",
+											"    pm.expect((pm.environment.get(\"Mail\"))).to.eql(JSON.parse(responseBody).mail);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check AccessProfile is true\", function () {\r",
+											"    pm.expect(\"ADMIN\").to.eql(JSON.parse(responseBody).accessProfile);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check Status is true\", function () {\r",
+											"    pm.expect(true).to.eql(JSON.parse(responseBody).status);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/user/{{id_user}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{id_user}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
 			],
 			"auth": {
 				"type": "apikey",
