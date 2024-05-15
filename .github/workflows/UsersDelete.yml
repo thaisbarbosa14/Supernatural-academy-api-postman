@@ -1,4 +1,4 @@
-name: Postman CI
+name: Postman CI - Users Delete
 
 on:
   push:
